@@ -3,7 +3,7 @@ import { gql } from '@apollo/client';
 export const QUERY_RECIPES = gql`
   query recipes {
     recipes {
-      recipeId
+      _id
       category
       cookTime
       description
@@ -17,7 +17,7 @@ export const QUERY_RECIPES = gql`
 export const QUERY_RECIPE = gql`
   query recipe($recipeId: ID!) {
     recipe(recipeId: $recipeId) {
-      recipeId
+      _id
       category
       cookTime
       created
@@ -73,7 +73,7 @@ export const QUERY_RECIPE = gql`
 export const QUERY_MENU = gql`
   query menu {
     menu {
-      recipeId
+      _id
       category
       cookTime
       description

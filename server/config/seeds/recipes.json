@@ -1,5 +1,6 @@
 [
   {
+    "category": "dinner",
     "cookTime": "",
     "created": "2020-08-03T11:42:20.910175+00:00",
     "createdBy": "RapidAPI",
@@ -118,6 +119,7 @@
     "yield": "6"
   },
   {
+    "category": "dinner",
     "cookTime": "",
     "created": "2020-08-03T11:42:20.910175+00:00",
     "createdBy": "RapidAPI",

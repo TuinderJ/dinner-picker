@@ -27,3 +27,40 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const DELETE_RECIPE = gql`
+  mutation deleteRecipe($recipeId: ID!) {
+    deleteRecipe(recipeId: $recipeId) {
+      _id
+      name
+    }
+  }
+`;
+
+export const MAKE_MENU = gql`
+  mutation makeMenu($numberOfMenuItems: Int!) {
+    makeMenu(numberOfMenuItems: $numberOfMenuItems) {
+      _id
+      category
+      cookTime
+      description
+      favorite
+      images
+      name
+    }
+  }
+`;
+
+export const REMOVE_MENU_ITEM = gql`
+  mutation removeMenuItem($recipeId: ID!) {
+    removeMenuItem(recipeId: $recipeId) {
+      _id
+      category
+      cookTime
+      description
+      favorite
+      images
+      name
+    }
+  }
+`;

@@ -45,6 +45,14 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
+userSchema.methods.getMenu = async function () {
+  const menu = [];
+  for (let i = 0; i < this.recipes.length; i++) {
+    if (this.menu.includes(this.recipes[i]._id.toString())) menu.push(this.recipes[i]);
+  }
+  return menu;
+};
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

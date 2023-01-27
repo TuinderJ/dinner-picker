@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const { AuthenticationError } = require('apollo-server-express');
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
@@ -22,13 +23,13 @@ const resolvers = {
       const recipe = '';
       return recipe;
     },
-    // TODO: Josh find a user's menu
+    // Done
     menu: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
 
       // add code here
-      const menu = '';
+      const menu = user.getMenu();
       return menu;
     },
   },
@@ -81,30 +82,52 @@ const resolvers = {
       const recipe = '';
       return recipe;
     },
-    // TODO: Josh remove a recipe (from args.recipeId) from user.recipes
-    deleteRecipe: async (parent, args, context) => {
+    // Done
+    deleteRecipe: async (parent, { recipeId }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
 
-      // add code here
-      return user;
+      for (let i = 0; i < user.recipes.length; i++) {
+        console.log(user.recipes[i]._id.toString(), recipeId);
+        if (user.recipes[i]._id.toString() === recipeId) {
+          user.recipes.splice(i, 1);
+          return user.save();
+        }
+      }
+
+      throw new Error('Recipe not found.');
     },
-    // TODO: Josh pick a number of random recipes (from args.numberOfMenuItems) and add [recipeId(s)] to user.menu
-    makeMenu: async (parent, args, context) => {
+    // Done
+    makeMenu: async (parent, { numberOfMenuItems }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
 
       // add code here
-      const menu = '';
+      const recipes = [...user.recipes];
+      const recipeIds = [];
+      for (let i = 0; i < numberOfMenuItems; i++) {
+        const randomNumber = Math.floor(Math.random() * recipes.length);
+        recipeIds.push(recipes[randomNumber]._id);
+        recipes.splice(randomNumber, 1);
+      }
+      user.menu = [...recipeIds];
+      user.save();
+
+      const menu = user.getMenu();
+
       return menu;
     },
-    // TODO: Josh remove a recipeId from user.manu
-    removeMenuItem: async (parent, args, context) => {
+    // Done
+    removeMenuItem: async (parent, { recipeId }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
 
-      // add code here
-      const menu = '';
+      for (let i = 0; i < user.menu.length; i++) {
+        if (user.menu[i].toString() === recipeId) user.menu.splice(i, 1);
+      }
+      user.save();
+
+      const menu = user.getMenu();
       return menu;
     },
   },
