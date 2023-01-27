@@ -27,6 +27,7 @@ const userSchema = new Schema({
     minlength: 5,
   },
   recipes: [recipeSchema],
+  menu: [Schema.Types.ObjectId],
 });
 
 // set up pre-save middleware to create password

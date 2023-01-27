@@ -1,70 +1,85 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_PRODUCTS = gql`
-  query getProducts($category: ID) {
-    products(category: $category) {
-      _id
-      name
+export const QUERY_RECIPES = gql`
+  query recipes {
+    recipes {
+      recipeId
+      category
+      cookTime
       description
-      price
-      quantity
-      image
-      category {
-        _id
-      }
-    }
-  }
-`;
-
-export const QUERY_CHECKOUT = gql`
-  query getCheckout($products: [ID]!) {
-    checkout(products: $products) {
-      session
-    }
-  }
-`;
-
-export const QUERY_ALL_PRODUCTS = gql`
-  {
-    products {
-      _id
+      favorite
+      images
       name
+    }
+  }
+`;
+
+export const QUERY_RECIPE = gql`
+  query recipe($recipeId: ID!) {
+    recipe(recipeId: $recipeId) {
+      recipeId
+      category
+      cookTime
+      created
+      createdBy
+      customerUuid
       description
-      price
-      quantity
-      category {
-        name
+      favorite
+      images
+      ingredients
+      instructions {
+        steps
       }
-    }
-  }
-`;
-
-export const QUERY_CATEGORIES = gql`
-  {
-    categories {
-      _id
+      lastUsed
       name
+      newImages {
+        hUnits
+        height
+        length
+        mime
+        type
+        url
+        wUnits
+        width
+      }
+      newOriginalImages {
+        hUnits
+        height
+        length
+        mime
+        type
+        url
+        wUnits
+        width
+      }
+      originalDescription
+      originalIngredients
+      originalInstructions {
+        steps
+      }
+      originalName
+      originalTotalTime
+      originalYield
+      prepTime
+      totalTime
+      updated
+      url
+      uuid
+      yield
     }
   }
 `;
 
-export const QUERY_USER = gql`
-  {
-    user {
-      firstName
-      lastName
-      orders {
-        _id
-        purchaseDate
-        products {
-          _id
-          name
-          description
-          price
-          quantity
-          image
-        }
-      }
+export const QUERY_MENU = gql`
+  query menu {
+    menu {
+      recipeId
+      category
+      cookTime
+      description
+      favorite
+      images
+      name
     }
   }
 `;
