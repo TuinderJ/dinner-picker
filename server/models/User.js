@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const recipeSchema = require('./Recipe');
 
 const userSchema = new Schema({
   firstName: {
@@ -26,8 +24,10 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  recipes: [recipeSchema],
-  menu: [Schema.Types.ObjectId],
+  familyId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Family',
+  },
 });
 
 // set up pre-save middleware to create password
@@ -43,14 +43,6 @@ userSchema.pre('save', async function (next) {
 // compare the incoming password with the hashed password
 userSchema.methods.isCorrectPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
-};
-
-userSchema.methods.getMenu = async function () {
-  const menu = [];
-  for (let i = 0; i < this.recipes.length; i++) {
-    if (this.menu.includes(this.recipes[i]._id.toString())) menu.push(this.recipes[i]);
-  }
-  return menu;
 };
 
 const User = mongoose.model('User', userSchema);

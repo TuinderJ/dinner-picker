@@ -1,6 +1,5 @@
-const { ObjectId } = require('mongodb');
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, Family } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -8,11 +7,9 @@ const resolvers = {
     // Done
     recipes: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
-
       const user = await User.findById(context.user._id);
-      const recipes = [...user.recipes];
-
-      return recipes;
+      const family = await Family.findById(user.familyId);
+      return family.recipes;
     },
     // TODO: Valeryo find a recipe (from args.recipeId)
     recipe: async (parent, { recipeId }, context) => {
@@ -27,10 +24,8 @@ const resolvers = {
     menu: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-
-      // add code here
-      const menu = user.getMenu();
-      return menu;
+      const family = await Family.findById(user.familyId);
+      return family.getMenu();
     },
   },
   Mutation: {
@@ -86,12 +81,13 @@ const resolvers = {
     deleteRecipe: async (parent, { recipeId }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
 
-      for (let i = 0; i < user.recipes.length; i++) {
-        console.log(user.recipes[i]._id.toString(), recipeId);
-        if (user.recipes[i]._id.toString() === recipeId) {
-          user.recipes.splice(i, 1);
-          return user.save();
+      for (let i = 0; i < family.recipes.length; i++) {
+        if (family.recipes[i]._id.toString() === recipeId) {
+          family.recipes.splice(i, 1);
+          family.save();
+          return family.recipes;
         }
       }
 
@@ -101,34 +97,31 @@ const resolvers = {
     makeMenu: async (parent, { numberOfMenuItems }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
 
-      // add code here
-      const recipes = [...user.recipes];
-      const recipeIds = [];
+      const recipes = [...family.recipes];
+      family.menu = [];
       for (let i = 0; i < numberOfMenuItems; i++) {
         const randomNumber = Math.floor(Math.random() * recipes.length);
-        recipeIds.push(recipes[randomNumber]._id);
+        family.menu.push(recipes[randomNumber]._id);
         recipes.splice(randomNumber, 1);
       }
-      user.menu = [...recipeIds];
-      user.save();
+      family.save();
 
-      const menu = user.getMenu();
-
-      return menu;
+      return family.getMenu();
     },
     // Done
     removeMenuItem: async (parent, { recipeId }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
 
-      for (let i = 0; i < user.menu.length; i++) {
-        if (user.menu[i].toString() === recipeId) user.menu.splice(i, 1);
+      for (let i = 0; i < family.menu.length; i++) {
+        if (family.menu[i].toString() === recipeId) family.menu.splice(i, 1);
       }
-      user.save();
+      family.save();
 
-      const menu = user.getMenu();
-      return menu;
+      return family.getMenu();
     },
   },
 };

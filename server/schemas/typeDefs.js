@@ -1,13 +1,20 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  type Family {
+    _id: ID
+    name: String
+    members: [ID]
+    recipes: [Recipe]
+    menu: [Recipe]
+  }
+
   type User {
     _id: ID
     firstName: String
     lastName: String
     email: String
-    recipes: [Recipe]
-    menu: [ID]
+    familyId: ID
   }
 
   type Recipe {
@@ -113,7 +120,7 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    updateUser(firstName: String, lastName: String, email: String!, password: String): Auth
+    updateUser(firstName: String, lastName: String, email: String!, password: String): User
     login(email: String!, password: String!): Auth
     addRecipe(
       category: String
@@ -165,7 +172,7 @@ const typeDefs = gql`
       uuid: String
       yield: String
     ): Recipe
-    deleteRecipe(recipeId: ID!): Recipe
+    deleteRecipe(recipeId: ID!): [Recipe]
     makeMenu(numberOfMenuItems: Int!): [Recipe]
     removeMenuItem(recipeId: ID!): [Recipe]
   }
