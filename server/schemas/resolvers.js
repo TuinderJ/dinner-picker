@@ -83,7 +83,7 @@ const resolvers = {
       for (let i = 0; i < family.recipes.length; i++) {
         if (family.recipes[i]._id.toString() === recipeId) {
           family.recipes.splice(i, 1);
-          family.save();
+          await family.save();
           return family.recipes;
         }
       }
@@ -136,7 +136,7 @@ const resolvers = {
       for (let i = 0; i < family.menu.length; i++) {
         if (family.menu[i].toString() === recipeId) family.menu.splice(i, 1);
       }
-      family.save();
+      await family.save();
 
       return family.getMenu();
     },

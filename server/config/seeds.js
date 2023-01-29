@@ -6,7 +6,6 @@ db.once('open', async () => {
   await Family.deleteMany();
   const family = await Family.create({
     name: 'Test',
-    recipes,
   });
 
   await User.deleteMany();
@@ -19,7 +18,10 @@ db.once('open', async () => {
   });
 
   family.members.push(user._id);
-  family.save();
+  recipes.forEach(recipe => {
+    family.recipes.push({ ...recipe, addedBy: user._id });
+  });
+  await family.save();
 
   console.log('family and user seeded');
 
