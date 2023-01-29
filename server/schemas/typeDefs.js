@@ -150,6 +150,7 @@ const typeDefs = gql`
       uuid: String
       yield: String
     ): Recipe
+    addRecipeFromUrl(url: String): Recipe
     updateRecipe(
       recipeId: ID!
       category: String
@@ -174,6 +175,9 @@ const typeDefs = gql`
     ): Recipe
     deleteRecipe(recipeId: ID!): [Recipe]
     makeMenu(numberOfMenuItems: Int!): [Recipe]
+    makeMenuFavoritesOnly(numberOfMenuItems: Int!): [Recipe]
+    makeMenuFavoriteWeighted(numberOfMenuItems: Int!): [Recipe]
+    vetoMenuItem(recipeId: ID!): [Recipe]
     removeMenuItem(recipeId: ID!): [Recipe]
   }
 `;

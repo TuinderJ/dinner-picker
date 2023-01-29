@@ -1,17 +1,14 @@
 const mongoose = require('mongoose');
+const MENU_TYPES = require('../utils/menuTypes');
 const { Schema } = mongoose;
 const recipeSchema = require('./Recipe');
 
 const familySchema = new Schema({
   name: String,
-  members: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    },
-  ],
+  members: [Schema.Types.ObjectId],
   recipes: [recipeSchema],
   menu: [Schema.Types.ObjectId],
+  menuType: String,
 });
 
 familySchema.methods.getMenu = async function () {
@@ -24,6 +21,18 @@ familySchema.methods.getMenu = async function () {
     }
   }
   return menu;
+};
+
+familySchema.methods.makeMenu = async function ({ recipes, numberOfMenuItems, menuType }) {
+  let recipeList = [...recipes];
+  this.menu = [];
+  for (let i = 0; i < numberOfMenuItems; i++) {
+    const randomNumber = Math.floor(Math.random() * recipeList.length);
+    this.menu.push(recipeList[randomNumber]._id);
+    if (numberOfMenuItems <= recipeList.length) recipeList = recipeList.filter(recipe => recipe._id !== recipeList[randomNumber]._id);
+  }
+  this.menuType = menuType;
+  this.save();
 };
 
 const Family = mongoose.model('Family', familySchema);
