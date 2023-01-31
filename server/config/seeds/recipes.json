@@ -720,7 +720,7 @@
     "createdBy": "RapidAPI",
     "customerUuid": "8e1fc598-2d58-4ae9-b4cc-62364a0c6ce3",
     "description": "Full of great veggies and high-fibre quinoa, this easy-to-make salad is nutritious, delicious and super-satisfying. Top with juicy pomegranate seeds for a great burst of flavour.",
-    "favorite": false,
+    "favorite": true,
     "images": ["http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg"],
     "ingredients": [
       "2 sweet potatoes (350g each)",
@@ -958,7 +958,7 @@
     "createdBy": "RapidAPI",
     "customerUuid": "8e1fc598-2d58-4ae9-b4cc-62364a0c6ce3",
     "description": "Full of great veggies and high-fibre quinoa, this easy-to-make salad is nutritious, delicious and super-satisfying. Top with juicy pomegranate seeds for a great burst of flavour.",
-    "favorite": false,
+    "favorite": true,
     "images": ["http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg"],
     "ingredients": [
       "2 sweet potatoes (350g each)",
@@ -1434,7 +1434,7 @@
     "createdBy": "RapidAPI",
     "customerUuid": "8e1fc598-2d58-4ae9-b4cc-62364a0c6ce3",
     "description": "Full of great veggies and high-fibre quinoa, this easy-to-make salad is nutritious, delicious and super-satisfying. Top with juicy pomegranate seeds for a great burst of flavour.",
-    "favorite": false,
+    "favorite": true,
     "images": ["http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg"],
     "ingredients": [
       "2 sweet potatoes (350g each)",

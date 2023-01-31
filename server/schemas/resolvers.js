@@ -15,6 +15,7 @@ const resolvers = {
     recipe: async (parent, { recipeId }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
 
       // add code here
       const recipe = '';
@@ -59,6 +60,7 @@ const resolvers = {
     addRecipe: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
 
       // add code here
       const recipe = '';
@@ -70,6 +72,7 @@ const resolvers = {
     updateRecipe: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
 
       // add code here
       const recipe = '';
@@ -117,17 +120,51 @@ const resolvers = {
 
       // make recipes array and double favorited items
       let recipes = [];
-      family.recipes.map(recipe => {
-        recipe.favorite ? (recipes = [...recipes, recipe, recipe]) : (recipes = [...recipes, recipe]);
-      });
+      family.recipes.forEach(recipe => (recipe.favorite ? (recipes = [...recipes, recipe, recipe]) : (recipes = [...recipes, recipe])));
 
       if (!recipes.length) throw new Error('No recipes are favorited');
 
       family.makeMenu({ recipes, numberOfMenuItems, menuType: MENU_TYPES.FAVORITE_WEIGHTED });
       return family.getMenu();
     },
-    // TODO: Josh
-    vetoMenuItem: async (parent, { recipeId }, context) => {},
+    vetoMenuItem: async (parent, { recipeId }, context) => {
+      if (!context.user) throw new AuthenticationError('Not logged in');
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+
+      let recipes = [];
+      switch (family.menuType) {
+        case MENU_TYPES.NORMAL:
+          recipes = [...family.recipes];
+          break;
+        case MENU_TYPES.FAVORITE_ONLY:
+          recipes = family.recipes.filter(recipe => recipe.favorite);
+          break;
+        case MENU_TYPES.FAVORITE_WEIGHTED:
+          family.recipes.forEach(recipe => (recipe.favorite ? (recipes = [...recipes, recipe, recipe]) : (recipes = [...recipes, recipe])));
+          break;
+        default:
+          break;
+      }
+
+      if (family.menu.length <= recipes.length) {
+        // filter out current menu items to ensure no duplicates
+        recipes = recipes.filter(recipe => !family.menu.includes(recipe._id));
+      }
+
+      const randomNumber = Math.floor(Math.random() * recipes.length);
+      const newRecipeId = recipes[randomNumber]._id;
+
+      for (let i = 0; i < family.menu.length; i++) {
+        if (family.menu[i].toString() === recipeId) {
+          family.menu[i] = newRecipeId;
+          break;
+        }
+      }
+
+      await family.save();
+      return family.getMenu();
+    },
     removeMenuItem: async (parent, { recipeId }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const MENU_TYPES = require('../utils/menuTypes');
 const { Schema } = mongoose;
 const recipeSchema = require('./Recipe');
 

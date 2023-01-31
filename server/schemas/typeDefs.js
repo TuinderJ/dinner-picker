@@ -134,7 +134,7 @@ const typeDefs = gql`
       ingredients: [String]
       instructions: Instructions
       lastUsed: Int
-      name: String
+      name: String!
       newImages: NewImages
       newOriginalImages: NewOriginalImages
       originalDescription: String
@@ -164,7 +164,7 @@ const typeDefs = gql`
       ingredients: [String]
       instructions: Instructions
       lastUsed: Int
-      name: String
+      name: String!
       newImages: NewImages
       prepTime: String
       totalTime: String
