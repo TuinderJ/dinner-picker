@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-export default function AddRecipe() {
-  return(
-    <div>ADD RECIPE</div>
-  )
+export default function AddRecipe({ setActivePage }) {
+  useEffect(() => {
+    setActivePage("AddRecipe");
+  }, []);
+  return <div>ADD RECIPE</div>;
 }

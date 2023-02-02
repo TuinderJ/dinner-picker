@@ -1,7 +1,25 @@
 import React from "react";
+import {
+  BodyContainer,
+  MainContainer,
+  SignUpBtn,
+  SignUpBtnContainer,
+  TitleImage,
+  TitleContainer,
+} from "../LandingPage/landingPage.style";
+import TitlePng from "../../assets/Title02.png";
 
 export default function landingPage() {
-  return(
-    <div>LANDING PAGE</div>
-  )
+  return (
+    <BodyContainer>
+      <MainContainer>
+        <TitleContainer>
+          <TitleImage src={TitlePng} />
+        </TitleContainer>
+        <SignUpBtnContainer>
+          <SignUpBtn>SIGN UP</SignUpBtn>
+        </SignUpBtnContainer>
+      </MainContainer>
+    </BodyContainer>
+  );
 }

@@ -1,8 +1,10 @@
-import React from "react";
-
+import React, { useEffect } from "react";
 import { CardsContainer } from "../AllRecipes/AllRecipes.style";
 
-export default function AllRecipes() {
+export default function AllRecipes({ setActivePage }) {
+  useEffect(() => {
+    setActivePage("AllRecipes");
+  }, []);
   return (
     <CardsContainer>TEST</CardsContainer>
     // <div>
