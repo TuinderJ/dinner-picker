@@ -1,4 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
+const { FragmentsOnCompositeTypesRule } = require("graphql");
 const { User, Family } = require("../models");
 const { signToken } = require("../utils/auth");
 const MENU_TYPES = require("../utils/menuTypes");
@@ -58,12 +59,13 @@ const resolvers = {
 
       return { token, user };
     },
-    // TODO: Valeryo push new recipe (from args) into user.recipes
+
     addRecipe: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError("Not logged in");
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
 
+      // pushing new recipe from args to display on user
       const newRecipe = {
         ...args,
         createdBy: user._id,
@@ -74,48 +76,38 @@ const resolvers = {
       await family.save();
 
       return family.recipes[family.recipes.length - 1];
-
-      //const recipe = '';
-      //return recipe;
     },
     // TODO: Josh
-    addRecipeFromUrl: async (parent, args, context) => {},
+    addRecipeFromUrl: async (parent, args, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+    },
 
-    // TODO: Valeryo find a recipe (from args.recipeId) and update it with args
     updateRecipe: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError("Not logged in");
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
 
-      const updateRecipe = (recipes, args) => {
-        /*const recipeIndex = recipes.findIndex(recipe => recipe.recipeId === args.recipeId);
-  
-    if (recipeIndex === -1) {
-    return recipes;
-    }
-  
-    const updatedRecipe = {...recipes[recipeIndex],
-    name: args.name || recipes[recipeIndex].name,
-    ingredients: args.ingredients || recipes[recipeIndex].ingredients,
-    instructions: args.instructions || recipes[recipeIndex].instructions
-    };
-  //using slice 
-    return [
-    ...recipes.slice(0, recipeIndex),
-    updatedRecipe,
-    ...recipes.slice(recipeIndex + 1)
-    ];*/
+      //update Recipe -new name...
+      const recipeIndex = family.recipes.findIndex(
+        (recipe) => recipe._id.toString() === args.recipeId
+      );
+
+      if (recipeIndex === -1) {
+        throw new Error("Recipe not found");
+      }
+
+      const newRecipe = {
+        ...family.recipes[recipeIndex],
+        ...args,
       };
 
-      const updatedRecipes = updateRecipe(user.recipes, {
-        recipeId: 1,
-        recipeId: 2,
-      });
-      user.recipes = updatedRecipes;
+      family.recipes[recipeIndex] = newRecipe;
 
-      // add code here
-      //const recipe = '';
-      //return recipe;
+      await family.save();
+
+      return family.recipes[recipeIndex];
     },
 
     deleteRecipe: async (parent, { recipeId }, context) => {
@@ -130,7 +122,6 @@ const resolvers = {
           return family.recipes;
         }
       }
-
       throw new Error("Recipe not found");
     },
     makeMenu: async (parent, { numberOfMenuItems }, context) => {
