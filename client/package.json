@@ -9,7 +9,6 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "bootstrap": "^5.2.3",
     "graphql": "^14.6.0",
     "jwt-decode": "^2.2.0",
     "react": "^16.13.1",
@@ -40,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "react-error-overlay": "6.0.9",
     "sass": "^1.57.1"
   }
 }

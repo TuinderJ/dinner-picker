@@ -1,32 +1,39 @@
-import React, { useState } from "react";
+import React from "react";
 import {
+  NavbarBackground,
   NavbarContainer,
-  LeftCotainer,
-  RightCotainer,
-  NavbarInnerContainer,
-  NavbarLinkContainer,
-  NavbarLink,
+  LogoContainer,
   Logo,
-  Toggler
+  ListContainer,
+  LinksContainer,
+  NavbarLink,
+  LittleDot,
+  LogButtonContainer,
+  LogButton,
 } from "../Navbar/navbar.style";
 import LogoPng from "../../assets/logo.png";
 
 export default function Header() {
   return (
-    <NavbarContainer>
-      <NavbarInnerContainer>
-        <LeftCotainer>
+    <NavbarBackground>
+      <NavbarContainer>
+        <LogoContainer>
           <Logo src={LogoPng}></Logo>
-        </LeftCotainer>
-        <RightCotainer>
-          <NavbarLinkContainer>
-            <NavbarLink to="/AddRecipe">Add Recipe</NavbarLink>
-            <NavbarLink to="AllRecipes">All Recipes</NavbarLink>
-            <NavbarLink to="Menu">Menu</NavbarLink>
-            <Toggler></Toggler>
-          </NavbarLinkContainer>
-        </RightCotainer>
-      </NavbarInnerContainer>
-    </NavbarContainer>
+        </LogoContainer>
+        <ListContainer>
+          <LinksContainer>
+            <NavbarLink to="/AddRecipe">ADD RECIPE</NavbarLink>
+            <LittleDot>•</LittleDot>
+            <NavbarLink to="/AllRecipes">ALL RECIPES</NavbarLink>
+            <LittleDot>•</LittleDot>
+            <NavbarLink to="/Menu">MENU</NavbarLink>
+          </LinksContainer>
+          <LogButtonContainer>
+            <LogButton to="/Login">ACCOUNT</LogButton>
+            {/* <LogButton to="Login">L O G I N</LogButton> */}
+          </LogButtonContainer>
+        </ListContainer>
+      </NavbarContainer>
+    </NavbarBackground>
   );
 }

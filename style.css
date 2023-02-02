@@ -1,0 +1,79 @@
+:root {
+    --Pinkysh: #ff6464;
+    --paperYellow: #fff1d8;
+    --smokyBlack: #1b100e;
+}
+
+
+body {
+    background-color: var(--Pinkysh);
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.menuDisplay {
+    margin-top: 6em;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+    
+}
+
+.card {
+    border: solid 2px var(--smokyBlack);
+    background-color: var(--paperYellow);
+    width: 18em;
+    height: 100%;
+    margin: 1em;
+    box-shadow: 4px 4px 10px var(--smokyBlack);
+    text-align: left;
+    align-items: center;
+    align-content: center;
+  
+}
+
+.recipeName {
+    /* border: solid white 2px; */
+    background-color: var(--smokyBlack);
+    height: 100%;
+    margin-top: -1rem;
+    width: 100%;
+    text-align: center;
+}
+
+.title {
+    padding: 1em;   
+    color: white;
+    font-family: 'Nunito', sans-serif;
+}
+
+.imageTag {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.contents {
+    border-bottom: solid 1px var(--smokyBlack);
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+    color: var(--smokyBlack);
+}
+
+img {
+    padding-top: 0.2em;
+    width: 100%;
+    height: 90%;
+}
+
+.card:hover {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    transition: 300ms;
+    -webkit-transform: scale(1.02);
+}
+

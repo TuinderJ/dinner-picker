@@ -5,6 +5,7 @@ import LandingPage from "./components/LandingPage";
 import AddRecipe from "./components/AddRecipe";
 import AllRecipes from "./components/AllRecipes";
 import Menu from "./components/Menu";
+import "./style.css"
 
 export default function App() {
   return (
@@ -12,9 +13,10 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/add" element={<AddRecipe />} />
-        <Route path="/all" element={<AllRecipes />} />
-        <Route path="/menu" element={<Menu />} />
+        <Route path="/AddRecipe" element={<AddRecipe />} />
+        <Route path="/AllRecipes" element={<AllRecipes />} />
+        <Route path="/Menu" element={<Menu />} />
+        {/* <Route path="/Login" element={<Login />} /> */}
       </Routes>
     </>
   );

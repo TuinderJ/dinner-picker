@@ -1,52 +1,193 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+// NAVIGATION BAR MAIN CONTAINER
+
+export const NavbarBackground = styled.div`
+  background-color: #fff1d8;
+  width: 100%;
+  height: 15vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Nunito", sans-serif;
+
+  @media screen and (max-width: 768px) {
+    background-color: #fff1d8;
+    width: 100%;
+    height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* font-family: "Nunito", sans-serif; */
+  }
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+    height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Nunito", sans-serif;
+  }
+`;
+
 export const NavbarContainer = styled.nav`
+  background-color: #fff1d8;
+  width: 97%;
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    border: 2px solid #1b100e;
+  }
+
+  @media screen and (max-width: 576px) {
+  }
+`;
+
+// LOGO CONTAINER
+
+export const LogoContainer = styled.div`
+  flex: 20%;
   width: 100%;
-  height: 100px;
+  height: 100%;
   display: flex;
-  flex-direction: column;
-`;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #1b100e;
 
-export const LeftCotainer = styled.div`
-  flex: 30%;
-  display: flex;
-  /* align-items: center; */
-  /* padding-left: 5%; */
-`;
-export const RightCotainer = styled.div`
-  flex: 70%;
-  display: flex;
-  align-items: flex-end;
-  padding-right: 50px;
-`;
+  @media (max-width: 768px) {
+    flex: 70%;
+    width: 100%;
+    height: 70%;
+    border: none;
+  }
 
-export const NavbarInnerContainer = styled.div`
-  width: 100%;
-  height: 80px;
-  display: flex;
-`;
-
-export const NavbarLinkContainer = styled.div`
-  display: flex;
-`;
-
-export const NavbarLink = styled(Link)`
-  color: black;
-  font-size: x-large;
-  font-family: "Courier New", Courier, monospace;
-  text-decoration: none;
-  margin: 10px;
+  @media (max-width: 576px) {
+    width: 100%;
+    height: 80%;
+    border: none;
+  }
 `;
 
 export const Logo = styled.img`
-  margin: 10px;
-  max-width: 180px;
-  height: auto;
+  width: 50%;
+
+  @media (max-width: 768px) {
+    width: 30%;
+  }
+
+  @media (max-width: 576px) {
+    width: 40%;
+  }
 `;
 
-export const Toggler = styled.button`
+// TABS & LOG BUTTON CONTAINER
 
-`
+export const ListContainer = styled.div`
+  flex: 80%;
+  width: 100%;
+  height: 100%;
+  border-top: 2px solid #1b100e;
+  border-bottom: 2px solid #1b100e;
+  display: flex;
 
-export const NavbarExtendedContainer = styled.div``;
+  @media (max-width: 768px) {
+    flex: 30%;
+    height: 30%;
+    border-top: 2px solid #1b100e;
+    border-bottom: none;
+  }
+
+  @media (max-width: 576px) {
+    height: 20%;
+    border-top: 2px solid #1b100e;
+  }
+`;
+
+export const LinksContainer = styled.div`
+  flex: 80%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  @media (max-width: 768px) {
+  }
+
+  @media (max-width: 576px) {
+  }
+`;
+
+export const NavbarLink = styled(Link)`
+  text-decoration: none;
+  color: #1b100e;
+  font-weight: 800;
+  font-size: 20px;
+
+  &:active {
+    color: #ff6464;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 17px;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 11px;
+  }
+`;
+
+export const LittleDot = styled.p`
+  margin-top: 0.9rem;
+  color: #1b100e;
+
+  @media (max-width: 768px) {
+    margin-top: 0.9rem;
+    color: #1b100e;
+  }
+
+  @media (max-width: 576px) {
+    margin-top: 0.9rem;
+    color: #1b100e;
+  }
+`;
+
+export const LogButtonContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  flex: 20%;
+  display: flex;
+  align-self: center;
+  text-align: center;
+
+  @media (max-width: 768px) {
+  }
+
+  @media (max-width: 576px) {
+  }
+`;
+
+export const LogButton = styled.button`
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: #1b100e;
+  color: #ff6464;
+  font-size: 19px;
+
+  @media (max-width: 768px) {
+    font-size: 17px;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 12px;
+  }
+`;
