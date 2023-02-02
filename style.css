@@ -13,7 +13,6 @@ body {
 }
 
 .menuDisplay {
-    /* border: solid 2px var(--smokyBlack); */
     margin-top: 6em;
     width: 60%;
     display: flex;
@@ -27,32 +26,35 @@ body {
 .card {
     border: solid 2px var(--smokyBlack);
     background-color: var(--paperYellow);
-    /* border: solid 2px var(--russian-violet); */
-    /* background: linear-gradient(to right, white, var(--Nyanza)); */
-    /* border-radius: 5px; */
-    
-    width: 14em;
-    height: 22em;
+    width: 18em;
+    height: 100%;
     margin: 1em;
     box-shadow: 4px 4px 10px var(--smokyBlack);
     text-align: left;
-      
+    align-items: center;
+    align-content: center;
+  
 }
 
 .recipeName {
+    /* border: solid white 2px; */
     background-color: var(--smokyBlack);
-    height: 24%;
-    /* margin-right: -2rem;
-    margin-left: -2rem; */
+    height: 100%;
     margin-top: -1rem;
     width: 100%;
+    text-align: center;
 }
 
 .title {
-    padding-top: 1em;
-    margin-left: .8em;
+    padding: 1em;   
     color: white;
-    
+    font-family: 'Nunito', sans-serif;
+}
+
+.imageTag {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .contents {
@@ -60,4 +62,18 @@ body {
     padding-left: 1rem;
     padding-bottom: 1rem;
     color: var(--smokyBlack);
+}
+
+img {
+    padding-top: 0.2em;
+    width: 100%;
+    height: 90%;
+}
+
+.card:hover {
+
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    transition: 300ms;
+    -webkit-transform: scale(1.02);
 }
