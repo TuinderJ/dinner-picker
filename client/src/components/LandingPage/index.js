@@ -7,7 +7,7 @@ import {
   TitleImage,
   TitleContainer,
 } from "../LandingPage/landingPage.style";
-import TitlePng from "../../assets/Title02.png";
+import TitlePng from "../../assets/Title.png";
 
 export default function landingPage() {
   return (
