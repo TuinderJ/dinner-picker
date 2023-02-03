@@ -4,8 +4,8 @@ import LogoPng from '../../assets/logo.png';
 import Auth from '../../utils/auth';
 
 export default function Header({ activePage }) {
-  // const handleLogin = () => Auth.login();
   const handleLogout = () => Auth.logout();
+
   return (
     <NavbarBackground>
       <NavbarContainer>
@@ -13,7 +13,6 @@ export default function Header({ activePage }) {
           <Logo src={LogoPng} />
         </LogoContainer>
         <ListContainer>
-          {/* {true ? ( */}
           {Auth.loggedIn() ? (
             <>
               <LinksContainer>

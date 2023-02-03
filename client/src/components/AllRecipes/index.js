@@ -1,5 +1,6 @@
-import { useQuery, useEffect } from '@apollo/client';
-import { CardsContainer } from '../AllRecipes/AllRecipes.style';
+import { useEffect } from 'react';
+import { useQuery } from '@apollo/client';
+import { CardsContainer } from './AllRecipes.style';
 import { QUERY_RECIPES } from '../../utils/queries';
 
 export default function AllRecipes({ setActivePage }) {
@@ -8,6 +9,7 @@ export default function AllRecipes({ setActivePage }) {
   useEffect(() => {
     setActivePage('AllRecipes');
   }, []);
+
   return (
     <>
       {loading ? (
