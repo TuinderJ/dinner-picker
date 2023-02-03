@@ -1,26 +1,17 @@
-import styled from "styled-components";
-import BackgroundImg from "../../assets/Background02.png";
-import MobileImg from "../../assets/MobileBG.png";
-import IpadImg from "../../assets/IpadBG.png";
+import styled from 'styled-components';
+import BackgroundImg from '../../assets/Background02.png';
+import MobileImg from '../../assets/MobileBG.png';
+import IpadImg from '../../assets/IpadBG.png';
+import { Link } from 'react-router-dom';
 
 export const BodyContainer = styled.div`
-  background-image: url(${BackgroundImg});
   background-color: #fff1d8;
   width: 100%;
   height: 88vh;
   display: flex;
   text-align: center;
   justify-content: center;
-
-  @media screen and (max-width: 768px) {
-    background-image: url(${IpadImg});
-    background-repeat: no-repeat;
-  }
-
-  @media screen and (max-width: 576px) {
-    background-image: url(${MobileImg});
-    background-repeat: no-repeat;
-  }
+  overflow: hidden;
 `;
 
 export const MainContainer = styled.div`
@@ -29,15 +20,19 @@ export const MainContainer = styled.div`
   border: 2px solid #1b100e;
   display: flex;
   flex-direction: column;
+  background-image: url(${BackgroundImg});
+  background-repeat: no-repeat;
 
   @media screen and (max-width: 768px) {
     width: 100%;
     height: 100%;
+    background-image: url(${IpadImg});
   }
 
   @media screen and (max-width: 576px) {
     width: 100%;
     height: 100%;
+    background-image: url(${MobileImg});
   }
 `;
 
@@ -87,12 +82,12 @@ export const SignUpBtnContainer = styled.div`
   }
 `;
 
-export const SignUpBtn = styled.button`
+export const SignUpLink = styled(Link)`
   width: 10rem;
   height: 4rem;
   background-color: #1b100e;
   border: none;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   color: #ff6464;
   font-size: 1.6rem;
   cursor: pointer;

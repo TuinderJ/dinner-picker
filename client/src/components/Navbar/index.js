@@ -1,7 +1,8 @@
 import React from 'react';
-import { NavbarBackground, NavbarContainer, LogoContainer, Logo, ListContainer, LinksContainer, NavbarLink, LittleDot, LogButtonContainer, LogButton } from './navbar.style';
+import { NavbarBackground, LogBtn, NavbarContainer, LogoContainer, Logo, ListContainer, LinksContainer, NavbarLink, LittleDot, LogButtonContainer, BlackSquare } from './navbar.style';
 import LogoPng from '../../assets/logo.png';
 import Auth from '../../utils/auth';
+import { Link } from 'react-router-dom';
 
 export default function Header({ activePage }) {
   const handleLogout = () => Auth.logout();
@@ -10,26 +11,33 @@ export default function Header({ activePage }) {
     <NavbarBackground>
       <NavbarContainer>
         <LogoContainer>
-          <Logo src={LogoPng} />
+          <Link to='/'>
+            <Logo src={LogoPng} />
+          </Link>
         </LogoContainer>
         <ListContainer>
           {Auth.loggedIn() ? (
             <>
               <LinksContainer>
-                <NavbarLink to='/AddRecipe'>ADD RECIPE</NavbarLink>
+                <NavbarLink className={activePage === 'AddRecipe' ? 'active' : ''} to='/AddRecipe'>
+                  ADD RECIPE
+                </NavbarLink>
                 <LittleDot>•</LittleDot>
-                <NavbarLink to='/AllRecipes'>ALL RECIPES</NavbarLink>
+                <NavbarLink className={activePage === 'AllRecipes' ? 'active' : ''} to='/AllRecipes'>
+                  ALL RECIPES
+                </NavbarLink>
                 <LittleDot>•</LittleDot>
-                <NavbarLink to='/Menu'>MENU</NavbarLink>
+                <NavbarLink className={activePage === 'Menu' ? 'active' : ''} to='/Menu'>
+                  MENU
+                </NavbarLink>
               </LinksContainer>
               <LogButtonContainer>
-                <LogButton onClick={handleLogout}>ACCOUNT</LogButton>
+                <LogBtn onClick={handleLogout}>LOGOUT</LogBtn>
               </LogButtonContainer>
             </>
           ) : (
             <LogButtonContainer>
-              {/* <LogButton onClick={handleLogin}>L O G I N</LogButton> */}
-              <NavbarLink to='/Login'>Login</NavbarLink>
+              <BlackSquare></BlackSquare>
             </LogButtonContainer>
           )}
         </ListContainer>
