@@ -39,7 +39,7 @@ Have a high-quality README (with unique name, description, technologies used, sc
 - [License](#license)
 - [Technologies Used](#technologiest-used)
 - [Team and Contributors](#team-and-contributors)
-- [Link To Deployed Application](#link-to-deployed-application)
+- [Link To The Deployed Application](#link-to-the-deployed-application)
 
 ## Installation
 
