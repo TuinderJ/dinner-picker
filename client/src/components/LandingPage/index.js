@@ -1,17 +1,25 @@
-import React from 'react';
-import { BodyContainer, MainContainer, SignUpBtn, SignUpBtnContainer, TitleImage, TitleContainer } from './style';
+import React, { useEffect } from 'react';
+import { BodyContainer, MainContainer, SignUpLink, SignUpBtnContainer, TitleImage, TitleContainer } from './style';
 import TitlePng from '../../assets/Title.png';
+import Auth from '../../utils/auth';
 
-export default function landingPage() {
+export default function LandingPage({ setActivePage }) {
+  useEffect(() => {
+    setActivePage('');
+  }, []);
   return (
     <BodyContainer>
       <MainContainer>
         <TitleContainer>
           <TitleImage src={TitlePng} />
         </TitleContainer>
-        <SignUpBtnContainer>
-          <SignUpBtn>SIGN UP</SignUpBtn>
-        </SignUpBtnContainer>
+        {Auth.loggedIn() ? (
+          <></>
+        ) : (
+          <SignUpBtnContainer>
+            <SignUpLink to='/login'>SIGN UP / LOGIN</SignUpLink>
+          </SignUpBtnContainer>
+        )}
       </MainContainer>
     </BodyContainer>
   );

@@ -1,29 +1,27 @@
-const { AuthenticationError } = require("apollo-server-express");
-const { FragmentsOnCompositeTypesRule } = require("graphql");
-const { User, Family } = require("../models");
-const { signToken } = require("../utils/auth");
-const MENU_TYPES = require("../utils/menuTypes");
+const { AuthenticationError } = require('apollo-server-express');
+const { FragmentsOnCompositeTypesRule } = require('graphql');
+const { User, Family } = require('../models');
+const { signToken } = require('../utils/auth');
+const MENU_TYPES = require('../utils/menuTypes');
 
 const resolvers = {
   Query: {
     recipes: async (parent, args, context) => {
-      if (!context.user) throw new AuthenticationError("Not logged in");
+      if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
-      return family.recipes;
+      return family?.recipes || [];
     },
     recipe: async (parent, { recipeId }, context) => {
-      if (!context.user) throw new AuthenticationError("Not logged in");
+      if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
 
       //findRecipe
-      return family.recipes.find(
-        (recipe) => recipe._id.toString() === recipeId
-      );
+      return family.recipes.find(recipe => recipe._id.toString() === recipeId);
     },
     menu: async (parent, args, context) => {
-      if (!context.user) throw new AuthenticationError("Not logged in");
+      if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
       return family.getMenu();
@@ -37,7 +35,7 @@ const resolvers = {
       return { token, user };
     },
     updateUser: async (parent, args, context) => {
-      if (!context.user) throw new AuthenticationError("Not logged in");
+      if (!context.user) throw new AuthenticationError('Not logged in');
       return await User.findByIdAndUpdate(context.user._id, args, {
         new: true,
       });
@@ -46,13 +44,13 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError("Incorrect credentials");
+        throw new AuthenticationError('Incorrect credentials');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError("Incorrect credentials");
+        throw new AuthenticationError('Incorrect credentials');
       }
 
       const token = signToken(user);
@@ -61,7 +59,7 @@ const resolvers = {
     },
 
     addRecipe: async (parent, args, context) => {
-      if (!context.user) throw new AuthenticationError("Not logged in");
+      if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
 
@@ -79,23 +77,21 @@ const resolvers = {
     },
     // TODO: Josh
     addRecipeFromUrl: async (parent, args, context) => {
-      if (!context.user) throw new AuthenticationError("Not logged in");
+      if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
     },
 
     updateRecipe: async (parent, args, context) => {
-      if (!context.user) throw new AuthenticationError("Not logged in");
+      if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
 
       //update Recipe -new name...
-      const recipeIndex = family.recipes.findIndex(
-        (recipe) => recipe._id.toString() === args.recipeId
-      );
+      const recipeIndex = family.recipes.findIndex(recipe => recipe._id.toString() === args.recipeId);
 
       if (recipeIndex === -1) {
-        throw new Error("Recipe not found");
+        throw new Error('Recipe not found');
       }
 
       const newRecipe = {
@@ -111,7 +107,7 @@ const resolvers = {
     },
 
     deleteRecipe: async (parent, { recipeId }, context) => {
-      if (!context.user) throw new AuthenticationError("Not logged in");
+      if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
 
@@ -122,10 +118,10 @@ const resolvers = {
           return family.recipes;
         }
       }
-      throw new Error("Recipe not found");
+      throw new Error('Recipe not found');
     },
     makeMenu: async (parent, { numberOfMenuItems }, context) => {
-      if (!context.user) throw new AuthenticationError("Not logged in");
+      if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
 
@@ -138,12 +134,12 @@ const resolvers = {
       return family.getMenu();
     },
     makeMenuFavoritesOnly: async (parent, { numberOfMenuItems }, context) => {
-      if (!context.user) throw new AuthenticationError("Not logged in");
+      if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
 
-      const recipes = family.recipes.filter((recipe) => recipe.favorite);
-      if (!recipes.length) throw new Error("No recipes are favorited");
+      const recipes = family.recipes.filter(recipe => recipe.favorite);
+      if (!recipes.length) throw new Error('No recipes are favorited');
 
       family.makeMenu({
         recipes,
@@ -152,24 +148,16 @@ const resolvers = {
       });
       return family.getMenu();
     },
-    makeMenuFavoriteWeighted: async (
-      parent,
-      { numberOfMenuItems },
-      context
-    ) => {
-      if (!context.user) throw new AuthenticationError("Not logged in");
+    makeMenuFavoriteWeighted: async (parent, { numberOfMenuItems }, context) => {
+      if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
 
       // make recipes array and double favorited items
       let recipes = [];
-      family.recipes.forEach((recipe) =>
-        recipe.favorite
-          ? (recipes = [...recipes, recipe, recipe])
-          : (recipes = [...recipes, recipe])
-      );
+      family.recipes.forEach(recipe => (recipe.favorite ? (recipes = [...recipes, recipe, recipe]) : (recipes = [...recipes, recipe])));
 
-      if (!recipes.length) throw new Error("No recipes are favorited");
+      if (!recipes.length) throw new Error('No recipes are favorited');
 
       family.makeMenu({
         recipes,
@@ -179,7 +167,7 @@ const resolvers = {
       return family.getMenu();
     },
     vetoMenuItem: async (parent, { recipeId }, context) => {
-      if (!context.user) throw new AuthenticationError("Not logged in");
+      if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
 
@@ -189,14 +177,10 @@ const resolvers = {
           recipes = [...family.recipes];
           break;
         case MENU_TYPES.FAVORITE_ONLY:
-          recipes = family.recipes.filter((recipe) => recipe.favorite);
+          recipes = family.recipes.filter(recipe => recipe.favorite);
           break;
         case MENU_TYPES.FAVORITE_WEIGHTED:
-          family.recipes.forEach((recipe) =>
-            recipe.favorite
-              ? (recipes = [...recipes, recipe, recipe])
-              : (recipes = [...recipes, recipe])
-          );
+          family.recipes.forEach(recipe => (recipe.favorite ? (recipes = [...recipes, recipe, recipe]) : (recipes = [...recipes, recipe])));
           break;
         default:
           break;
@@ -204,7 +188,7 @@ const resolvers = {
 
       if (family.menu.length <= recipes.length) {
         // filter out current menu items to ensure no duplicates
-        recipes = recipes.filter((recipe) => !family.menu.includes(recipe._id));
+        recipes = recipes.filter(recipe => !family.menu.includes(recipe._id));
       }
 
       const randomNumber = Math.floor(Math.random() * recipes.length);
@@ -221,7 +205,7 @@ const resolvers = {
       return family.getMenu();
     },
     removeMenuItem: async (parent, { recipeId }, context) => {
-      if (!context.user) throw new AuthenticationError("Not logged in");
+      if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
 

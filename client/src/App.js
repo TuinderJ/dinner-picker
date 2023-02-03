@@ -34,7 +34,7 @@ export default function App() {
     <ApolloProvider client={client}>
       <Navbar activePage={activePage} />
       <Routes>
-        <Route path='/' element={<LandingPage />} setActivePage={setActivePage} />
+        <Route path='/' element={<LandingPage setActivePage={setActivePage} />} />
         <Route path='/AddRecipe' element={<AddRecipe setActivePage={setActivePage} />} />
         <Route path='/AllRecipes' element={<AllRecipes setActivePage={setActivePage} />} />
         <Route path='/Menu' element={<Menu setActivePage={setActivePage} />} />
