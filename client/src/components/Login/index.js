@@ -1,4 +1,8 @@
-import React from "react";
+import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { Form } from './style';
+import { LOGIN } from '../../utils/mutations';
+import Auth from '../../utils/auth';
 import {
   BorderBox,
   LeftBox,
@@ -14,6 +18,28 @@ import {
   FormBtnBox,
   LoginBtn,
 } from "../Login/login.style";
+
+const [formState, setFormState] = useState({ email: '', password: '' });
+  const [login, { error }] = useMutation(LOGIN);
+
+  const handleLoginFormSubmit = async e => {
+    e.preventDefault();
+    try {
+      const mutationResponse = await login({ variables: { email: formState.email, password: formState.password } });
+      const token = mutationResponse.data.login.token;
+      Auth.login(token);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
 
 export default function Header() {
   return (

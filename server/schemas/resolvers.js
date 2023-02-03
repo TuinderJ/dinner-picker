@@ -1,121 +1,238 @@
-const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
-const { signToken } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const { AuthenticationError } = require("apollo-server-express");
+const { FragmentsOnCompositeTypesRule } = require("graphql");
+const { User, Family } = require("../models");
+const { signToken } = require("../utils/auth");
+const MENU_TYPES = require("../utils/menuTypes");
 
 const resolvers = {
   Query: {
-    users: async () => {
-      return await User.find();
+    recipes: async (parent, args, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+      return family.recipes;
     },
-    user: async (parent, { _id }) => {
-      return await User.findById(_id);
+    recipe: async (parent, { recipeId }, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+
+      //findRecipe
+      return family.recipes.find(
+        (recipe) => recipe._id.toString() === recipeId
+      );
     },
-    //   products: async (parent, { category, name }) => {
-    //     const params = {};
-    //     if (category) {
-    //       params.category = category;
-    //     }
-    //     if (name) {
-    //       params.name = {
-    //         $regex: name
-    //       };
-    //     }
-    //     return await Product.find(params).populate('category');
-    //   },
-    //   product: async (parent, { _id }) => {
-    //     return await Product.findById(_id).populate('category');
-    //   },
-    //   user: async (parent, args, context) => {
-    //     if (context.user) {
-    //       const user = await User.findById(context.user._id).populate({
-    //         path: 'orders.products',
-    //         populate: 'category'
-    //       });
-    //       user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-    //       return user;
-    //     }
-    //     throw new AuthenticationError('Not logged in');
-    //   },
-    //   order: async (parent, { _id }, context) => {
-    //     if (context.user) {
-    //       const user = await User.findById(context.user._id).populate({
-    //         path: 'orders.products',
-    //         populate: 'category'
-    //       });
-    //       return user.orders.id(_id);
-    //     }
-    //     throw new AuthenticationError('Not logged in');
-    //   },
-    //   checkout: async (parent, args, context) => {
-    //     const url = new URL(context.headers.referer).origin;
-    //     const order = new Order({ products: args.products });
-    //     const line_items = [];
-    //     const { products } = await order.populate('products');
-    //     for (let i = 0; i < products.length; i++) {
-    //       const product = await stripe.products.create({
-    //         name: products[i].name,
-    //         description: products[i].description,
-    //         images: [`${url}/images/${products[i].image}`]
-    //       });
-    //       const price = await stripe.prices.create({
-    //         product: product.id,
-    //         unit_amount: products[i].price * 100,
-    //         currency: 'usd',
-    //       });
-    //       line_items.push({
-    //         price: price.id,
-    //         quantity: 1
-    //       });
-    //     }
-    //     const session = await stripe.checkout.sessions.create({
-    //       payment_method_types: ['card'],
-    //       line_items,
-    //       mode: 'payment',
-    //       success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-    //       cancel_url: `${url}/`
-    //     });
-    //     return { session: session.id };
-    //   }
+    menu: async (parent, args, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+      return family.getMenu();
+    },
   },
-  // Mutation: {
-  //   addUser: async (parent, args) => {
-  //     const user = await User.create(args);
-  //     const token = signToken(user);
-  //     return { token, user };
-  //   },
-  //   addOrder: async (parent, { products }, context) => {
-  //     console.log(context);
-  //     if (context.user) {
-  //       const order = new Order({ products });
-  //       await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
-  //       return order;
-  //     }
-  //     throw new AuthenticationError('Not logged in');
-  //   },
-  //   updateUser: async (parent, args, context) => {
-  //     if (context.user) {
-  //       return await User.findByIdAndUpdate(context.user._id, args, { new: true });
-  //     }
-  //     throw new AuthenticationError('Not logged in');
-  //   },
-  //   updateProduct: async (parent, { _id, quantity }) => {
-  //     const decrement = Math.abs(quantity) * -1;
-  //     return await Product.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
-  //   },
-  //   login: async (parent, { email, password }) => {
-  //     const user = await User.findOne({ email });
-  //     if (!user) {
-  //       throw new AuthenticationError('Incorrect credentials');
-  //     }
-  //     const correctPw = await user.isCorrectPassword(password);
-  //     if (!correctPw) {
-  //       throw new AuthenticationError('Incorrect credentials');
-  //     }
-  //     const token = signToken(user);
-  //     return { token, user };
-  //   }
-  // }
+  Mutation: {
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
+
+      return { token, user };
+    },
+    updateUser: async (parent, args, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      return await User.findByIdAndUpdate(context.user._id, args, {
+        new: true,
+      });
+    },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
+    },
+
+    addRecipe: async (parent, args, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+
+      // pushing new recipe from args to display on user
+      const newRecipe = {
+        ...args,
+        createdBy: user._id,
+      };
+
+      family.recipes.push(newRecipe);
+
+      await family.save();
+
+      return family.recipes[family.recipes.length - 1];
+    },
+    // TODO: Josh
+    addRecipeFromUrl: async (parent, args, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+    },
+
+    updateRecipe: async (parent, args, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+
+      //update Recipe -new name...
+      const recipeIndex = family.recipes.findIndex(
+        (recipe) => recipe._id.toString() === args.recipeId
+      );
+
+      if (recipeIndex === -1) {
+        throw new Error("Recipe not found");
+      }
+
+      const newRecipe = {
+        ...family.recipes[recipeIndex],
+        ...args,
+      };
+
+      family.recipes[recipeIndex] = newRecipe;
+
+      await family.save();
+
+      return family.recipes[recipeIndex];
+    },
+
+    deleteRecipe: async (parent, { recipeId }, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+
+      for (let i = 0; i < family.recipes.length; i++) {
+        if (family.recipes[i]._id.toString() === recipeId) {
+          family.recipes.splice(i, 1);
+          await family.save();
+          return family.recipes;
+        }
+      }
+      throw new Error("Recipe not found");
+    },
+    makeMenu: async (parent, { numberOfMenuItems }, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+
+      const recipes = [...family.recipes];
+      family.makeMenu({
+        recipes,
+        numberOfMenuItems,
+        menuType: MENU_TYPES.NORMAL,
+      });
+      return family.getMenu();
+    },
+    makeMenuFavoritesOnly: async (parent, { numberOfMenuItems }, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+
+      const recipes = family.recipes.filter((recipe) => recipe.favorite);
+      if (!recipes.length) throw new Error("No recipes are favorited");
+
+      family.makeMenu({
+        recipes,
+        numberOfMenuItems,
+        menuType: MENU_TYPES.FAVORITE_ONLY,
+      });
+      return family.getMenu();
+    },
+    makeMenuFavoriteWeighted: async (
+      parent,
+      { numberOfMenuItems },
+      context
+    ) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+
+      // make recipes array and double favorited items
+      let recipes = [];
+      family.recipes.forEach((recipe) =>
+        recipe.favorite
+          ? (recipes = [...recipes, recipe, recipe])
+          : (recipes = [...recipes, recipe])
+      );
+
+      if (!recipes.length) throw new Error("No recipes are favorited");
+
+      family.makeMenu({
+        recipes,
+        numberOfMenuItems,
+        menuType: MENU_TYPES.FAVORITE_WEIGHTED,
+      });
+      return family.getMenu();
+    },
+    vetoMenuItem: async (parent, { recipeId }, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+
+      let recipes = [];
+      switch (family.menuType) {
+        case MENU_TYPES.NORMAL:
+          recipes = [...family.recipes];
+          break;
+        case MENU_TYPES.FAVORITE_ONLY:
+          recipes = family.recipes.filter((recipe) => recipe.favorite);
+          break;
+        case MENU_TYPES.FAVORITE_WEIGHTED:
+          family.recipes.forEach((recipe) =>
+            recipe.favorite
+              ? (recipes = [...recipes, recipe, recipe])
+              : (recipes = [...recipes, recipe])
+          );
+          break;
+        default:
+          break;
+      }
+
+      if (family.menu.length <= recipes.length) {
+        // filter out current menu items to ensure no duplicates
+        recipes = recipes.filter((recipe) => !family.menu.includes(recipe._id));
+      }
+
+      const randomNumber = Math.floor(Math.random() * recipes.length);
+      const newRecipeId = recipes[randomNumber]._id;
+
+      for (let i = 0; i < family.menu.length; i++) {
+        if (family.menu[i].toString() === recipeId) {
+          family.menu[i] = newRecipeId;
+          break;
+        }
+      }
+
+      await family.save();
+      return family.getMenu();
+    },
+    removeMenuItem: async (parent, { recipeId }, context) => {
+      if (!context.user) throw new AuthenticationError("Not logged in");
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+
+      for (let i = 0; i < family.menu.length; i++) {
+        if (family.menu[i].toString() === recipeId) family.menu.splice(i, 1);
+      }
+      await family.save();
+
+      return family.getMenu();
+    },
+  },
 };
 
 module.exports = resolvers;
