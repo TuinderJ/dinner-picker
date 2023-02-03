@@ -1,13 +1,6 @@
-import React from "react";
-import {
-  BodyContainer,
-  MainContainer,
-  SignUpBtn,
-  SignUpBtnContainer,
-  TitleImage,
-  TitleContainer,
-} from "../LandingPage/landingPage.style";
-import TitlePng from "../../assets/Title.png";
+import React from 'react';
+import { BodyContainer, MainContainer, SignUpBtn, SignUpBtnContainer, TitleImage, TitleContainer } from './style';
+import TitlePng from '../../assets/Title.png';
 
 export default function landingPage() {
   return (
