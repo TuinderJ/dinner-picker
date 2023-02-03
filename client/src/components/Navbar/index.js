@@ -45,7 +45,7 @@ export default function Header({ activePage }) {
           </LinksContainer>
           <LogButtonContainer>
             {/* <LogButton to="/Login">ACCOUNT</LogButton> */}
-            <LogButton to="Login">L O G I N</LogButton>
+            <LogButton to="/Login">L O G I N</LogButton>
           </LogButtonContainer>
         </ListContainer>
       </NavbarContainer>

@@ -19,7 +19,6 @@ export const NavbarBackground = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    /* font-family: "Nunito", sans-serif; */
   }
 
   @media screen and (max-width: 576px) {

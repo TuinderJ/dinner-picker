@@ -5,6 +5,7 @@ import LandingPage from "./components/LandingPage";
 import AddRecipe from "./components/AddRecipe";
 import AllRecipes from "./components/AllRecipes";
 import Menu from "./components/Menu";
+import Login from "./components/Login";
 import "./style.css";
 
 export default function App() {
@@ -23,7 +24,7 @@ export default function App() {
           element={<AllRecipes setActivePage={setActivePage} />}
         />
         <Route path="/Menu" element={<Menu setActivePage={setActivePage} />} />
-        {/* <Route path="/Login" element={<Login />} /> */}
+        <Route path="/Login" element={<Login />} />
       </Routes>
     </>
   );
