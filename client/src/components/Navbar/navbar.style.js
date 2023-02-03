@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // NAVIGATION BAR MAIN CONTAINER
 
@@ -10,7 +10,7 @@ export const NavbarBackground = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
 
   @media screen and (max-width: 768px) {
     background-color: #fff1d8;
@@ -27,7 +27,7 @@ export const NavbarBackground = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Nunito", sans-serif;
+    font-family: 'Nunito', sans-serif;
   }
 `;
 
@@ -174,14 +174,30 @@ export const LogButtonContainer = styled.div`
   }
 `;
 
-export const LogButton = styled.button`
+export const BlackSquare = styled.div`
   width: 100%;
   height: 100%;
   border: none;
   background-color: #1b100e;
   color: #ff6464;
   font-size: 19px;
-  cursor: pointer;
+
+  @media (max-width: 768px) {
+    font-size: 17px;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 12px;
+  }
+`;
+
+export const LogBtn = styled.button`
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: #1b100e;
+  color: #ff6464;
+  font-size: 19px;
 
   @media (max-width: 768px) {
     font-size: 17px;

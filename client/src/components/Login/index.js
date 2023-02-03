@@ -1,21 +1,39 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { LOGIN } from '../../utils/mutations';
+import { LOGIN, ADD_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
-import { BorderBox, LeftBox, LogBox, MainLogContainer, RightBox, ButtonsBox, InputsBox, Button, Form, Input, Label, FormBtnBox, LoginBtn } from '../Login/login.style';
+import { BorderBox, LeftBox, LogBox, MainLogContainer, RightBox, ButtonsBox, InputsBox, Button, Input, Label, Form, FormBtnBox, LoginBtn } from '../Login/login.style';
 
 export default function Header() {
-  const [formState, setFormState] = useState({ email: '', password: '' });
-  const [login, { error }] = useMutation(LOGIN);
+  const [formState, setFormState] = useState({ email: '', password: '', firstName: '', lastName: '' });
+  const [loggingIn, setLoggingIn] = useState(true);
+  const [login, { error: loginError }] = useMutation(LOGIN);
+  const [signup, { error: signupError }] = useMutation(ADD_USER);
 
-  const handleLoginFormSubmit = async e => {
+  useEffect(() => {
+    if (Auth.loggedIn()) {
+      window.location.assign('/');
+    }
+  }, []);
+
+  const handleFormSubmit = async e => {
     e.preventDefault();
-    try {
-      const mutationResponse = await login({ variables: { email: formState.email, password: formState.password } });
-      const token = mutationResponse.data.login.token;
-      Auth.login(token);
-    } catch (e) {
-      console.log(e);
+    if (loggingIn) {
+      try {
+        const mutationResponse = await login({ variables: { email: formState.email, password: formState.password } });
+        const token = mutationResponse.data.login.token;
+        Auth.login(token);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      try {
+        const mutationResponse = await signup({ variables: { email: formState.email, password: formState.password, lastName: formState.lastName, firstName: formState.firstName } });
+        const token = mutationResponse.data.addUser.token;
+        Auth.login(token);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -26,39 +44,38 @@ export default function Header() {
       [name]: value,
     });
   };
+
+  const handleToggle = e => setLoggingIn(!loggingIn);
   return (
     <MainLogContainer>
       <BorderBox>
         <LogBox>
           <LeftBox>SPACE FOR FUTURE ADDS</LeftBox>
           <RightBox>
-            <ButtonsBox>
-              <Button>LOGIN</Button>
-              <Button className='active'>SIGN UP</Button>
+            <ButtonsBox onClick={handleToggle}>
+              <Button className={loggingIn ? 'active' : ''}>LOGIN</Button>
+              <Button className={loggingIn ? '' : 'active'}>SIGN UP</Button>
             </ButtonsBox>
             <InputsBox>
-              <Form>
-                <Label>
-                  Name:
-                  <Input type='text' required></Input>
-                </Label>
-                <Label>
-                  Lastname:
-                  <Input type='text' required></Input>
-                </Label>
-                <Label>
-                  Username:
-                  <Input type='text' required></Input>
-                </Label>
-                <Label>
-                  Password:
-                  <Input type='password' required></Input>
-                </Label>
-                {/* <Button>SIGN UP</Button> */}
+              <Form onSubmit={handleFormSubmit}>
+                {loggingIn ? (
+                  <></>
+                ) : (
+                  <>
+                    <Label htmlFor='firstName'>First Name:</Label>
+                    <Input type='text' onChange={handleChange} name='firstName' required></Input>
+                    <Label htmlFor='lastName'>Last Name:</Label>
+                    <Input type='text' onChange={handleChange} name='lastName' required></Input>
+                  </>
+                )}
+                <Label htmlFor='email'>Email:</Label>
+                <Input name='email' onChange={handleChange} type='email' required></Input>
+                <Label htmlFor='password'>Password:</Label>
+                <Input name='password' onChange={handleChange} type='password' required></Input>
+                <FormBtnBox>
+                  <LoginBtn type='submit'>{loggingIn ? 'LOGIN' : 'SIGN UP'}</LoginBtn>
+                </FormBtnBox>
               </Form>
-              <FormBtnBox>
-                <LoginBtn>LOGIN</LoginBtn>
-              </FormBtnBox>
             </InputsBox>
           </RightBox>
         </LogBox>
