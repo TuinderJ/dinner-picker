@@ -1,10 +1,13 @@
-import { useQuery } from '@apollo/client';
+import { useQuery, useEffect } from '@apollo/client';
 import { CardsContainer } from '../AllRecipes/AllRecipes.style';
 import { QUERY_RECIPES } from '../../utils/queries';
 
-export default function AllRecipes() {
+export default function AllRecipes({ setActivePage }) {
   const { loading, data } = useQuery(QUERY_RECIPES);
 
+  useEffect(() => {
+    setActivePage('AllRecipes');
+  }, []);
   return (
     <>
       {loading ? (

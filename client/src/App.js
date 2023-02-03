@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
@@ -29,14 +29,15 @@ const client = new ApolloClient({ link: authLink.concat(httpLink), cache: new In
 
 // Render App
 export default function App() {
+  const [activePage, setActivePage] = useState('');
   return (
     <ApolloProvider client={client}>
-      <Navbar />
+      <Navbar activePage={activePage} />
       <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/AddRecipe' element={<AddRecipe />} />
-        <Route path='/AllRecipes' element={<AllRecipes />} />
-        <Route path='/Menu' element={<Menu />} />
+        <Route path='/' element={<LandingPage />} setActivePage={setActivePage} />
+        <Route path='/AddRecipe' element={<AddRecipe setActivePage={setActivePage} />} />
+        <Route path='/AllRecipes' element={<AllRecipes setActivePage={setActivePage} />} />
+        <Route path='/Menu' element={<Menu setActivePage={setActivePage} />} />
         <Route path='/Login' element={<Login />} />
       </Routes>
     </ApolloProvider>
