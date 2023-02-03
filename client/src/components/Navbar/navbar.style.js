@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export const NavbarBackground = styled.div`
   background-color: #fff1d8;
   width: 100%;
-  height: 15vh;
+  height: 130px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,8 +132,8 @@ export const NavbarLink = styled(Link)`
   font-weight: 800;
   font-size: 20px;
 
-  &:active {
-    color: #ff6464;
+  &.active {
+    color: red;
   }
 
   @media (max-width: 768px) {
@@ -182,6 +182,7 @@ export const LogButton = styled.button`
   background-color: #1b100e;
   color: #ff6464;
   font-size: 19px;
+  cursor: pointer;
 
   @media (max-width: 768px) {
     font-size: 17px;
