@@ -3,9 +3,23 @@ import { useMutation } from '@apollo/client';
 import { Form } from './style';
 import { LOGIN } from '../../utils/mutations';
 import Auth from '../../utils/auth';
+import {
+  BorderBox,
+  LeftBox,
+  LogBox,
+  MainLogContainer,
+  RightBox,
+  ButtonsBox,
+  InputsBox,
+  Button,
+  Form,
+  Input,
+  Label,
+  FormBtnBox,
+  LoginBtn,
+} from "../Login/login.style";
 
-export default function Login() {
-  const [formState, setFormState] = useState({ email: '', password: '' });
+const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error }] = useMutation(LOGIN);
 
   const handleLoginFormSubmit = async e => {
@@ -27,13 +41,44 @@ export default function Login() {
     });
   };
 
+export default function Header() {
   return (
-    <Form onSubmit={handleLoginFormSubmit}>
-      <label htmlFor='email'>Email</label>
-      <input type='email' name='email' value={formState.email} onChange={handleChange} />
-      <label htmlFor='password'>Password</label>
-      <input type='password' name='password' value={formState.password} onChange={handleChange} />
-      <button type='submit'>Submit</button>
-    </Form>
+    <MainLogContainer>
+      <BorderBox>
+        <LogBox>
+          <LeftBox>SPACE FOR FUTURE ADDS</LeftBox>
+          <RightBox>
+            <ButtonsBox>
+              <Button >LOGIN</Button>
+              <Button className="active">SIGN UP</Button>
+            </ButtonsBox>
+            <InputsBox>
+              <Form>
+                <Label>
+                  Name:
+                  <Input type="text" required></Input>
+                </Label>
+                <Label>
+                  Lastname:
+                  <Input type="text" required></Input>
+                </Label>
+                <Label>
+                  Username:
+                  <Input type="text" required></Input>
+                </Label>
+                <Label>
+                  Password:
+                  <Input type="password" required></Input>
+                </Label>
+                {/* <Button>SIGN UP</Button> */}
+              </Form>
+              <FormBtnBox>
+                <LoginBtn>LOGIN</LoginBtn>
+              </FormBtnBox>
+            </InputsBox>
+          </RightBox>
+        </LogBox>
+      </BorderBox>
+    </MainLogContainer>
   );
 }

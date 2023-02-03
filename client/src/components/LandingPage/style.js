@@ -1,17 +1,7 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import BackgroundImg from "../../assets/Background02.png";
 import MobileImg from "../../assets/MobileBG.png";
 import IpadImg from "../../assets/IpadBG.png";
-
-// COLORS:
-// Pinkysh #FF6464
-// Paper Yellow #FFF1D8
-// Smoky Black #1B100E
-
-// FONTS:
-// font-family: 'Berkshire Swash', cursive; <---TITLES
-// font-family: 'Nunito', sans-serif; < --- MAIN
 
 export const BodyContainer = styled.div`
   background-image: url(${BackgroundImg});
@@ -21,17 +11,17 @@ export const BodyContainer = styled.div`
   display: flex;
   text-align: center;
   justify-content: center;
-  
+
   @media screen and (max-width: 768px) {
     background-image: url(${IpadImg});
     background-repeat: no-repeat;
   }
-  
+
   @media screen and (max-width: 576px) {
     background-image: url(${MobileImg});
     background-repeat: no-repeat;
   }
-  `;
+`;
 
 export const MainContainer = styled.div`
   width: 97%;
