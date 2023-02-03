@@ -1,37 +1,27 @@
-import React from "react";
-
-import { CardsContainer } from "../AllRecipes/AllRecipes.style";
+import { useQuery } from '@apollo/client';
+import { CardsContainer } from '../AllRecipes/AllRecipes.style';
+import { QUERY_RECIPES } from '../../utils/queries';
 
 export default function AllRecipes() {
+  const { loading, data } = useQuery(QUERY_RECIPES);
+
   return (
-    <CardsContainer>TEST</CardsContainer>
-    // <div>
-    // {/* <div class="menuDisplay">
-    //   <div class="card">
-    //     <div class="recipeName">
-    //       <p class="title">recipe name here</p>
-    //     </div>
-    //   </div>
-    //   <div class="card">
-    //     <div class="recipeName">
-    //       <p class="title">recipe name here</p>
-    //     </div>
-    //     <p class="contents">Ingredients:</p>
-    //   </div>
-    //   <div class="card">
-    //     <div class="recipeName">
-    //       <p class="title">recipe name here</p>
-    //     </div>
-    //     <p class="contents">Ingredients:</p>
-    //   </div>
-    //   <div class="card">
-    //     <div class="recipeName">
-    //       <p class="title">recipe name here</p>
-    //     </div>
-    //     <p class="contents">Ingredients:</p>
-    //   </div>
-    //   <div class="card"></div>
-    // </div> */}
-    // {/* </div> */}
+    <>
+      {loading ? (
+        <div>Loading</div>
+      ) : (
+        <CardsContainer>
+          {data.recipes.map(recipe => (
+            <div key={recipe._id} className='menuDisplay'>
+              <div className='card'>
+                <div className='recipeName'>
+                  <p className='title'>{recipe.name}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </CardsContainer>
+      )}
+    </>
   );
 }

@@ -1,23 +1,44 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import LandingPage from "./components/LandingPage";
-import AddRecipe from "./components/AddRecipe";
-import AllRecipes from "./components/AllRecipes";
-import Menu from "./components/Menu";
-import "./style.css"
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
+// Components
+import Navbar from './components/Navbar';
+
+// Pages
+import LandingPage from './components/LandingPage';
+import AddRecipe from './components/AddRecipe';
+import AllRecipes from './components/AllRecipes';
+import Menu from './components/Menu';
+import Login from './components/Login';
+import './style.css';
+
+// Setup Apollo Client
+const httpLink = createHttpLink({ uri: '/graphql' });
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+const client = new ApolloClient({ link: authLink.concat(httpLink), cache: new InMemoryCache() });
+
+// Render App
 export default function App() {
   return (
-    <>
+    <ApolloProvider client={client}>
       <Navbar />
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/AddRecipe" element={<AddRecipe />} />
-        <Route path="/AllRecipes" element={<AllRecipes />} />
-        <Route path="/Menu" element={<Menu />} />
-        {/* <Route path="/Login" element={<Login />} /> */}
+        <Route path='/' element={<LandingPage />} />
+        <Route path='/AddRecipe' element={<AddRecipe />} />
+        <Route path='/AllRecipes' element={<AllRecipes />} />
+        <Route path='/Menu' element={<Menu />} />
+        <Route path='/Login' element={<Login />} />
       </Routes>
-    </>
+    </ApolloProvider>
   );
 }
