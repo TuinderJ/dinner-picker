@@ -31,7 +31,6 @@ export default function Menu({ setActivePage }) {
         break;
       default:
     }
-    window.location.reload();
   };
 
   const handleChange = e => {
