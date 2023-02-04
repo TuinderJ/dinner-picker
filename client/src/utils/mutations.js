@@ -360,6 +360,20 @@ export const MAKE_MENU_FAVORITES_WEIGHTED = gql`
   }
 `;
 
+export const CLEAR_MENU = gql`
+  mutation clearMenu {
+    clearMenu {
+      _id
+      category
+      cookTime
+      description
+      favorite
+      images
+      name
+    }
+  }
+`;
+
 export const VETO_MENU_ITEM = gql`
   mutation vetoMenuItem($recipeId: ID!) {
     vetoMenuItem(recipeId: $recipeId) {
