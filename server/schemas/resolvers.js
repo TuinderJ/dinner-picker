@@ -105,7 +105,19 @@ const resolvers = {
 
       return family.recipes[recipeIndex];
     },
+    favoriteRecipe: async (parent, { recipeId }, context) => {
+      if (!context.user) throw new AuthenticationError('Not logged in');
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
 
+      for (let i = 0; i < family.recipes.length; i++) {
+        if (family.recipes[i]._id.toString() === recipeId) {
+          family.recipes[i].favorite = !family.recipes[i].favorite;
+          await family.save();
+          return family.recipes[i];
+        }
+      }
+    },
     deleteRecipe: async (parent, { recipeId }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
@@ -164,6 +176,15 @@ const resolvers = {
         numberOfMenuItems,
         menuType: MENU_TYPES.FAVORITE_WEIGHTED,
       });
+      return family.getMenu();
+    },
+    clearMenu: async (parent, { numberOfMenuItems }, context) => {
+      if (!context.user) throw new AuthenticationError('Not logged in');
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+
+      family.menu = [];
+      await family.save();
       return family.getMenu();
     },
     vetoMenuItem: async (parent, { recipeId }, context) => {

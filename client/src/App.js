@@ -13,6 +13,7 @@ import AllRecipes from './components/AllRecipes';
 import Menu from './components/Menu';
 import Login from './components/Login';
 import './style.css';
+import SingleRecipe from './components/SingleRecipe';
 
 // Setup Apollo Client
 const httpLink = createHttpLink({ uri: '/graphql' });
@@ -37,6 +38,7 @@ export default function App() {
         <Route path='/' element={<LandingPage setActivePage={setActivePage} />} />
         <Route path='/AddRecipe' element={<AddRecipe setActivePage={setActivePage} />} />
         <Route path='/AllRecipes' element={<AllRecipes setActivePage={setActivePage} />} />
+        <Route path='/Recipe/:recipeId' element={<SingleRecipe setActivePage={setActivePage} />} />
         <Route path='/Menu' element={<Menu setActivePage={setActivePage} />} />
         <Route path='/Login' element={<Login />} />
       </Routes>
