@@ -93,6 +93,8 @@ img {
     flex-direction: row; */
 }
 
+
+
 h2 {
     
     padding-left: 1em;
@@ -192,6 +194,7 @@ h2 {
         width: 100%;
         margin-top: 1em;
     }
+    
 }
 
 
@@ -262,3 +265,41 @@ h2 {
     background: #fff1d8;
     text-decoration: none;
   }
+
+
+@media only screen and (max-width: 500px) {
+    .smallImage {
+        height: 4em;
+        width: 4em;
+        padding: none;
+        font-size:xx-small
+    }
+
+    .editButton {
+        height: 3em;
+        width: 3em;
+    }
+
+    img {
+
+    }
+
+    .recipeLog {
+        background-color: var(--Pinkysh);
+        box-shadow: 4px 4px 10px var(--smokyBlack);
+        height: 4em;
+        margin: 1em;
+        align-items: center;
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        
+    }
+
+    .buttons {
+        display: flex;
+        text-align: center;
+    }
+
+
+}
