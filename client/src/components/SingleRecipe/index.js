@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { QUERY_RECIPE } from '../../utils/queries';
+import {Img, RecipeInfo, RecipeDisplay, LeftDiv, MiddleDiv, Ingredients, IngredientsDiv, Instructions, ImageDiv} from './style';
 
 const SingleRecipe = ({ setActivePage }) => {
   const { recipeId } = useParams();
@@ -14,41 +15,41 @@ const SingleRecipe = ({ setActivePage }) => {
       {loading ? (
         <div>loading</div>
       ) : (
-        <div className='recipeInfo'>
-          <div className='recipeDisplay'>
-            <div className='leftDiv'>
-              <div className='imageDiv'>
+        <RecipeInfo>
+          <RecipeDisplay>
+            <LeftDiv>
+              <ImageDiv>
                 <img src={data.recipe.images[0]} alt={data.recipe.name} className='recipePic' />
-              </div>
+              </ImageDiv>
 
-              <div className='ingredientsDiv'>
+              <IngredientsDiv>
                 <h2>Ingredients:</h2>
-                <div className='ingredients'>
+                <Ingredients>
                   <ul>
                     {data.recipe.ingredients?.map((ingredient, index) => (
                       <li key={index}>{ingredient}</li>
                     ))}
                   </ul>
-                </div>
-              </div>
-            </div>
+                </Ingredients>
+              </IngredientsDiv>
+            </LeftDiv>
 
-            <div className='middleDiv'>
+            <MiddleDiv>
               <h2>Instructions:</h2>
-              <div className='instructions'>
+              <Instructions>
                 <ul>
                   {data.recipe.instructions[0]?.steps.map((instruction, index) => (
                     <li key={index}>{instruction}</li>
                   ))}
                 </ul>
-              </div>
-            </div>
+              </Instructions>
+            </MiddleDiv>
 
             {/* <div class="botDiv">
           <h2>Additional Info Here:</h2>
         </div> */}
-          </div>
-        </div>
+          </RecipeDisplay>
+        </RecipeInfo>
       )}
     </>
   );

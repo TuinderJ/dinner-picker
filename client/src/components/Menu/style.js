@@ -6,7 +6,7 @@ import styled from 'styled-components';
 // --smokyBlack: #1b100e;
 // `;
 
-export const Menu = styled.div`
+export const MenuDiv = styled.div`
   margin-top: 3em;
   border-bottom: solid 1px var(--smokyBlack);
   background-color: var(--paperYellow);
