@@ -3,6 +3,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_MENU } from '../../utils/queries';
 import { MAKE_MENU, MAKE_MENU_FAVORITES_ONLY, MAKE_MENU_FAVORITES_WEIGHTED, CLEAR_MENU } from '../../utils/mutations';
 import MenuItem from '../MenuItem';
+import {MenuDiv} from './style';
 
 export default function Menu({ setActivePage }) {
   const { loading, data } = useQuery(QUERY_MENU);
@@ -43,6 +44,7 @@ export default function Menu({ setActivePage }) {
   const handleClearMenu = async e => await clearMenu({ variables: { numberOfMenuItems: formState.numberOfMenuItems } });
 
   return (
+    
     <>
       {loading ? (
         <div>Loading</div>
@@ -50,12 +52,12 @@ export default function Menu({ setActivePage }) {
         <div>
           {data?.menu[0] ? (
             <>
-              <div className='menu'>
+              <MenuDiv>
                 {data.menu.map(recipe => (
                   <MenuItem recipe={recipe} />
                 ))}
                 <button onClick={handleClearMenu}>Clear Menu</button>
-              </div>
+              </MenuDiv>
             </>
           ) : (
             <form onSubmit={handleFormSubmit}>
@@ -71,5 +73,6 @@ export default function Menu({ setActivePage }) {
         </div>
       )}
     </>
+    
   );
 }

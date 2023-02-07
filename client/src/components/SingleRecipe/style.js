@@ -1,11 +1,10 @@
-import React from 'react';
 import styled from 'styled-components';
 
-export const Root = styled.div`
-  --Pinkysh: #ff6464;
-  --paperYellow: #fff1d8;
-  --smokyBlack: #1b100e;
-`;
+// export const Root = styled.div`
+// --Pinkysh: #ff6464;
+// --paperYellow: #fff1d8;
+// --smokyBlack: #1b100e;
+// `;
 
 export const Body = styled.body`
   background-color: var(--Pinkysh);
@@ -15,13 +14,13 @@ export const Body = styled.body`
   align-items: center;
 `;
 
-export const Img = styled.img`
+export const ImgDiv = styled.img`
   border: solid 5px var(--Pinkysh);
   width: 100%;
   height: 90%;
 `;
 
-const RecipeInfo = styled.div`
+export const RecipeInfo = styled.div`
   margin-top: 3em;
   border-bottom: solid 1px var(--smokyBlack);
   background-color: var(--paperYellow);
@@ -29,11 +28,11 @@ const RecipeInfo = styled.div`
   box-shadow: 4px 4px 10px var(--smokyBlack);
 `;
 
-const H2 = styled.h2`
+export const H2 = styled.h2`
   padding-left: 1em;
 `;
 
-const RecipeDisplay = styled.div`
+export const RecipeDisplay = styled.div`
   display: flex;
   flex-direction: row;
   margin: 1em auto;
@@ -41,36 +40,40 @@ const RecipeDisplay = styled.div`
   flex-wrap: true;
 `;
 
-const RecipePic = styled.div`
-  border-radius: 18%;
-  width: 20em;
-  height: 20em;
-  margin-left: 2em;
-  margin-right: 2em;
-`;
-
-const LeftDiv = styled.div`
+export const LeftDiv = styled.div`
   width: 24em;
   padding: 1em;
   align-content: center;
 `;
 
-const MiddleDiv = styled.div`
+export const MiddleDiv = styled.div`
   border-left: solid 2px var(--smokyBlack);
   height: 45em;
   padding-right: 1em;
 `;
 
-const Ingredients = styled.div`
+export const ImageDiv = styled(Image)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+`;
+
+export const Ingredients = styled.div`
   padding-left: 1em;
   padding-top: 1em;
 `;
 
-const Instructions = styled(Ingredients)`
+export const Instructions = styled(Ingredients)`
   padding-right: 1em;
 `;
 
-const StyledMedia = `
+export const IngredientsDiv = styled.div`
+  /* border-top:  solid 2px var(--smokyBlack); */
+  text-align: left;
+`;
+
+export const StyledMedia = `
   @media only screen and (max-width: 900px) {
     .recipeInfo {
         align-items: center;
