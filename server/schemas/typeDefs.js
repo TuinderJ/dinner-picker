@@ -162,7 +162,7 @@ const typeDefs = gql`
       favorite: Boolean
       images: [String]
       ingredients: [String]
-      instructions: Instructions
+      instructions: [Instructions]
       lastUsed: Int
       name: String!
       newImages: NewImages

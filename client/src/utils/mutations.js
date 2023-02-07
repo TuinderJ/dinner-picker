@@ -49,7 +49,7 @@ export const ADD_RECIPE = gql`
     $favorite: Boolean
     $images: [String]
     $ingredients: [String]
-    $instructions: Instructions
+    $instructions: [Instructions]
     $name: String!
     $newImages: NewImages
     $newOriginalImages: NewOriginalImages
@@ -212,16 +212,9 @@ export const UPDATE_RECIPE = gql`
     $favorite: Boolean
     $images: [String]
     $ingredients: [String]
-    $instructions: Instructions
+    $instructions: [Instructions]
     $name: String!
     $newImages: NewImages
-    $newOriginalImages: NewOriginalImages
-    $originalDescription: String
-    $originalIngredients: [String]
-    $originalInstructions: OriginalInstructions
-    $originalName: String
-    $originalTotalTime: String
-    $originalYield: String
     $prepTime: String
     $totalTime: String
     $updated: String
@@ -229,7 +222,7 @@ export const UPDATE_RECIPE = gql`
     $uuid: String
     $yield: String
   ) {
-    addRecipe(
+    updateRecipe(
       recipeId: $recipeId
       category: $category
       cookTime: $cookTime
@@ -242,13 +235,6 @@ export const UPDATE_RECIPE = gql`
       instructions: $instructions
       name: $name
       newImages: $newImages
-      newOriginalImages: $newOriginalImages
-      originalDescription: $originalDescription
-      originalIngredients: $originalIngredients
-      originalInstructions: $originalInstructions
-      originalName: $originalName
-      originalTotalTime: $originalTotalTime
-      originalYield: $originalYield
       prepTime: $prepTime
       totalTime: $totalTime
       updated: $updated
@@ -257,6 +243,61 @@ export const UPDATE_RECIPE = gql`
       yield: $yield
     ) {
       _id
+      category
+      cookTime
+      created
+      createdBy
+      customerUuid
+      description
+      favorite
+      images
+      ingredients
+      instructions {
+        steps
+      }
+      lastUsed
+      name
+      newImages {
+        hUnits
+        height
+        length
+        mime
+        type
+        url
+        wUnits
+        width
+      }
+      newOriginalImages {
+        hUnits
+        height
+        length
+        mime
+        type
+        url
+        wUnits
+        width
+      }
+      originalDescription
+      originalIngredients
+      originalInstructions {
+        steps
+      }
+      originalName
+      originalTotalTime
+      originalYield
+      prepTime
+      totalTime
+      updated
+      url
+      uuid
+      yield
+    }
+  }
+`;
+
+export const FAVORITE_RECIPE = gql`
+  mutation favoriteRecipe($recipeId: ID!) {
+    favoriteRecipe(recipeId: $recipeId) {
       category
       cookTime
       created

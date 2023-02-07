@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
+
 import { QUERY_MENU } from '../../utils/queries';
 import { MAKE_MENU, MAKE_MENU_FAVORITES_ONLY, MAKE_MENU_FAVORITES_WEIGHTED, CLEAR_MENU } from '../../utils/mutations';
 import MenuItem from '../MenuItem';
-import {MenuDiv} from './style';
+
+import { MenuDiv, ClearMenuButton } from './style';
 
 export default function Menu({ setActivePage }) {
   const { loading, data } = useQuery(QUERY_MENU);
@@ -44,7 +46,6 @@ export default function Menu({ setActivePage }) {
   const handleClearMenu = async e => await clearMenu({ variables: { numberOfMenuItems: formState.numberOfMenuItems } });
 
   return (
-    
     <>
       {loading ? (
         <div>Loading</div>
@@ -53,10 +54,10 @@ export default function Menu({ setActivePage }) {
           {data?.menu[0] ? (
             <>
               <MenuDiv>
-                {data.menu.map(recipe => (
-                  <MenuItem recipe={recipe} />
+                {data.menu.map((recipe, index) => (
+                  <MenuItem key={recipe._id} recipe={recipe} />
                 ))}
-                <button onClick={handleClearMenu}>Clear Menu</button>
+                <ClearMenuButton onClick={handleClearMenu}>Clear Menu</ClearMenuButton>
               </MenuDiv>
             </>
           ) : (
@@ -73,6 +74,5 @@ export default function Menu({ setActivePage }) {
         </div>
       )}
     </>
-    
   );
 }

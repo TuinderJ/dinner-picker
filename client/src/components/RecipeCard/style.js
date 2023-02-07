@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 // COLORS:
-// Pinkysh #FF6464
+// pinkysh #FF6464
 // Paper Yellow #FFF1D8
 // Smoky Black #1B100E
 

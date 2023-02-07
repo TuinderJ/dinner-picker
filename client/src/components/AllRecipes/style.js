@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-
 // COLORS:
-// Pinkysh #FF6464
+// pinkysh #FF6464
 // Paper Yellow #FFF1D8
 // Smoky Black #1B100E
 
@@ -35,13 +34,13 @@ export const CardsContainer = styled.div`
 `;
 
 // :root {
-//     --Pinkysh: #ff6464;
+//     --pinkysh: #ff6464;
 //     --paperYellow: #fff1d8;
 //     --smokyBlack: #1b100e;
 // }
 
 // body {
-//     background-color: var(--Pinkysh);
+//     background-color: var(--pinkysh);
 //     justify-content: center;
 //     display: flex;
 //     align-items: center;

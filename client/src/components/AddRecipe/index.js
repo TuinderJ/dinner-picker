@@ -1,4 +1,9 @@
 import { useEffect, useState } from 'react';
+
+import { useMutation } from '@apollo/client';
+import { QUERY_MENU } from '../../utils/queries';
+import { ADD_RECIPE } from '../../utils/mutations';
+
 import {
   AddBody,
   StyleSquare,
@@ -24,8 +29,10 @@ import {
 import PastaIMG from '../../assets/pasta.jpg';
 
 export default function AddRecipe({ setActivePage }) {
+  const [addRecipe, { error: addRecipeError }] = useMutation(ADD_RECIPE, { refetchQueries: [{ query: QUERY_MENU }] });
+  const [formState, setFormState] = useState({ name: '', category: '', cookTime: '', description: '', ingredients: '', instructions: '' });
+
   useEffect(() => setActivePage('AddRecipe'), []);
-  const [formState, setFormState] = useState({ name: 'Test', category: 'Dinner', cookTime: 'Stuff' });
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -41,14 +48,16 @@ export default function AddRecipe({ setActivePage }) {
     const ingredients = form.ingredients.value.split(',').map(ingredient => ingredient.trim());
     const instructions = [{ steps: form.instructions.value.split(',').map(ingredient => ingredient.trim()) }];
     const recipe = {
-      name: form.RecipeName.value,
-      category: form.Category.value,
-      cookTime: form.CookTime.value,
-      description: form.Description.value,
+      name: form.name.value,
+      category: form.category.value,
+      cookTime: form.cookTime.value,
+      description: form.description.value,
       ingredients,
       instructions,
+      images: ['http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg'],
     };
-    console.log(recipe);
+    const { data } = await addRecipe({ variables: { ...recipe } });
+    if (data.addRecipe) window.location.assign(`/Recipe/${data.addRecipe._id}`);
   };
   return (
     <AddBody>
@@ -62,20 +71,20 @@ export default function AddRecipe({ setActivePage }) {
               <TopDiv>
                 <InputsContainer>
                   <InputWrapper>
-                    <SLabel htmlFor='RecipeName'>Recipe Name:</SLabel>
-                    <SInput type='text' name='RecipeName' value={formState.name} onChange={handleChange}></SInput>
+                    <SLabel htmlFor='name'>Recipe Name:</SLabel>
+                    <SInput type='text' name='name' value={formState.name} onChange={handleChange}></SInput>
                   </InputWrapper>
                   <InputWrapper>
-                    <SLabel htmlFor='Category'>Category:</SLabel>
-                    <SInput type='text' name='Category' value='Dinner'></SInput>
+                    <SLabel htmlFor='category'>Category:</SLabel>
+                    <SInput type='text' name='category' value={formState.category} onChange={handleChange}></SInput>
                   </InputWrapper>
                   <InputWrapper>
-                    <SLabel htmlFor='CookTime'>Cook Time:</SLabel>
-                    <SInput type='text' name='CookTime' value='Stuff'></SInput>
+                    <SLabel htmlFor='cookTime'>Cook Time:</SLabel>
+                    <SInput type='text' name='cookTime' value={formState.cookTime} onChange={handleChange}></SInput>
                   </InputWrapper>
                   <InputWrapper>
-                    <SLabel htmlFor='Description'>Description:</SLabel>
-                    <SInput type='text' name='Description' value='Cool Thing'></SInput>
+                    <SLabel htmlFor='description'>Description:</SLabel>
+                    <SInput type='text' name='description' value={formState.description} onChange={handleChange}></SInput>
                   </InputWrapper>
                 </InputsContainer>
                 <ImageContainer>
@@ -88,11 +97,11 @@ export default function AddRecipe({ setActivePage }) {
                 <TextAreaWrapper>
                   <InputWrapper>
                     <SLabel htmlFor='ingredients'>Ingredients: {`(Separate by commas)`}</SLabel>
-                    <STextArea name='ingredients' rows='3' value='1 thing stuff, 2 stuff things'></STextArea>
+                    <STextArea name='ingredients' rows='3' value={formState.ingredients} onChange={handleChange}></STextArea>
                   </InputWrapper>
                   <InputWrapper>
                     <SLabel htmlFor='instructions'>Instructions: {`(Separate by commas)`}</SLabel>
-                    <STextArea name='instructions' rows='3' value='Do a thing, Do another thing'></STextArea>
+                    <STextArea name='instructions' rows='3' value={formState.instructions} onChange={handleChange}></STextArea>
                   </InputWrapper>
                 </TextAreaWrapper>
                 <SBtnWrapper>
