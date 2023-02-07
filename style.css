@@ -85,8 +85,7 @@ img {
     margin-top: 3em;
     border-bottom: solid 1px var(--smokyBlack);
     background-color: var(--paperYellow);
-    width: 50em;
-    height: 50em;
+    width: 85vw;    
     box-shadow: 4px 4px 10px var(--smokyBlack);
     /* display: flex;
     flex-direction: row; */
@@ -127,6 +126,7 @@ h2 {
 .middleDiv {
     border-left: solid 2px var(--smokyBlack);
     height: 45em;
+    padding-right: 1em;
 }
 
 .ingredients, .instructions {
@@ -181,7 +181,9 @@ h2 {
     }
     
     img {
-        
+        border: solid 5px var(--Pinkysh);
+        width: 1vw;
+        height: 1vw;
         margin: auto;
         margin-top: 1em;
     }
@@ -194,6 +196,16 @@ h2 {
         margin-top: 1em;
     }
     
+}
+
+@media only screen and (max-width: 500px) {
+    .recipePic {
+        border: solid 5px var(--Pinkysh);
+        width: 50vw;
+        height: 50vw;
+        margin: auto;
+        margin-top: 1em;
+    }
 }
 
 
