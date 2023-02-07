@@ -75,6 +75,28 @@ export const LogoContainer = styled.div`
   }
 `;
 
+export const LinkLogo = styled(Link)`
+  flex: 20%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    flex: 70%;
+    width: 100%;
+    height: 70%;
+    border: none;
+  }
+
+  @media (max-width: 576px) {
+    width: 100%;
+    height: 80%;
+    border: none;
+  }
+`;
+
 export const Logo = styled.img`
   width: 50%;
 

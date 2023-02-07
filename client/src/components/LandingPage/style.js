@@ -39,11 +39,10 @@ export const MainContainer = styled.div`
 export const TitleContainer = styled.div`
   width: 100%;
   flex: 70%;
+  color: #ff6464;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #ff6464;
 
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -72,6 +71,8 @@ export const TitleImage = styled.img`
 export const SignUpBtnContainer = styled.div`
   width: 100%;
   flex: 30%;
+  display: flex;
+  justify-content: center;
 
   @media screen and (max-width: 768px) {
   }
@@ -83,16 +84,32 @@ export const SignUpBtnContainer = styled.div`
 `;
 
 export const SignUpLink = styled(Link)`
-  width: 10rem;
-  height: 4rem;
+  width: 230px;
+  height: 60px;
   background-color: #1b100e;
   border: none;
   font-family: 'Nunito', sans-serif;
   color: #ff6464;
-  font-size: 1.6rem;
+  font-size: 25px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media screen and (max-width: 768px) {
+    width: 8.5rem;
+    height: 3.5rem;
+    font-size: 1.6rem;
+  }
+
+  @media screen and (max-width: 576px) {
+    width: 150px;
+    height: 2.7rem;
+    font-size: 1rem;
+  }
+`;
+export const SSignUp = styled.div`
+  /* @media screen and (max-width: 768px) {
     width: 8.5rem;
     height: 3.5rem;
     font-size: 1.6rem;
@@ -102,5 +119,5 @@ export const SignUpLink = styled(Link)`
     width: 7rem;
     height: 2.7rem;
     font-size: 1rem;
-  }
+  } */
 `;
