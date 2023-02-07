@@ -1,12 +1,20 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  type Family {
+    _id: ID
+    name: String
+    members: [ID]
+    recipes: [Recipe]
+    menu: [Recipe]
+  }
+
   type User {
     _id: ID
     firstName: String
     lastName: String
     email: String
-    recipes: [Recipe]
+    familyId: ID
   }
 
   type Recipe {
@@ -105,15 +113,16 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]
-    user(_id: ID!): User
-    recipe(_id: ID!): Recipe
+    recipes: [Recipe]
+    recipe(recipeId: ID!): Recipe
+    menu: [Recipe]
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): User
+    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
+    updateUser(firstName: String, lastName: String, email: String!, password: String): User
+    login(email: String!, password: String!): Auth
     addRecipe(
-      _id: ID!
       category: String
       cookTime: String
       created: String
@@ -125,7 +134,7 @@ const typeDefs = gql`
       ingredients: [String]
       instructions: Instructions
       lastUsed: Int
-      name: String
+      name: String!
       newImages: NewImages
       newOriginalImages: NewOriginalImages
       originalDescription: String
@@ -141,8 +150,8 @@ const typeDefs = gql`
       uuid: String
       yield: String
     ): Recipe
-    changeRecipe(
-      _id: ID!
+    addRecipeFromUrl(url: String): Recipe
+    updateRecipe(
       recipeId: ID!
       category: String
       cookTime: String
@@ -155,7 +164,7 @@ const typeDefs = gql`
       ingredients: [String]
       instructions: Instructions
       lastUsed: Int
-      name: String
+      name: String!
       newImages: NewImages
       prepTime: String
       totalTime: String
@@ -164,8 +173,12 @@ const typeDefs = gql`
       uuid: String
       yield: String
     ): Recipe
-    useRecipe(_id: ID!, recipeId: ID!, lastUsed: Int): Recipe
-    deleteRecipe(_id: ID!, recipeId: ID!): Recipe
+    deleteRecipe(recipeId: ID!): [Recipe]
+    makeMenu(numberOfMenuItems: Int!): [Recipe]
+    makeMenuFavoritesOnly(numberOfMenuItems: Int!): [Recipe]
+    makeMenuFavoriteWeighted(numberOfMenuItems: Int!): [Recipe]
+    vetoMenuItem(recipeId: ID!): [Recipe]
+    removeMenuItem(recipeId: ID!): [Recipe]
   }
 `;
 

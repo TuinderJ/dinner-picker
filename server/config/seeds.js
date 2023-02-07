@@ -1,19 +1,29 @@
 const db = require('./connection');
-const { User } = require('../models');
+const { User, Family } = require('../models');
 const recipes = require('./seeds/recipes.json');
 
 db.once('open', async () => {
-  await User.deleteMany();
+  await Family.deleteMany();
+  const family = await Family.create({
+    name: 'Test',
+  });
 
-  await User.create({
+  await User.deleteMany();
+  const user = await User.create({
     firstName: 'Test',
     lastName: 'Dummy',
     email: 'test@test.com',
     password: 'password12345',
-    recipes,
+    familyId: family._id,
   });
 
-  console.log('users seeded');
+  family.members.push(user._id);
+  recipes.forEach(recipe => {
+    family.recipes.push({ ...recipe, addedBy: user._id });
+  });
+  await family.save();
+
+  console.log('family and user seeded');
 
   process.exit();
 });
