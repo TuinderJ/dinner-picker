@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 export const Root = styled.div`
@@ -21,10 +20,6 @@ export const Img = styled.img`
   height: 90%;
 `;
 
-
-export const H2 = styled.h2`
-  padding-left: 1em;
-`;
 
 const RecipeInfo = styled.div`
   margin-top: 3em;

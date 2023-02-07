@@ -1,38 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
-
-export const Root = styled.div`
---Pinkysh: #ff6464;
---paperYellow: #fff1d8;
---smokyBlack: #1b100e;
-`;
-
-export const Body = styled.body`
-  background-color: var(--Pinkysh);
-  color: var(--smokyBlack);
-  justify-content: center;
-  display: flex;
-  align-items: center;
-`;
-
-export const Img = styled.img`
-  border: solid 5px var(--Pinkysh);
-  width: 100%;
-  height: 90%;
-`;
-
 
 export const H2 = styled.h2`
   padding-left: 1em;
-`;
-
-export const Menu = styled.div`
-  margin-top: 3em;
-  border-bottom: solid 1px var(--smokyBlack);
-  background-color: var(--paperYellow);
-  width: 50em;
-  height: 50em;
-  box-shadow: 4px 4px 10px var(--smokyBlack);
 `;
 
 export const RecipeLog = styled.div`
@@ -114,6 +83,3 @@ export const MediaQuery = styled.div`
     }
   }
 `;
-
-
-
