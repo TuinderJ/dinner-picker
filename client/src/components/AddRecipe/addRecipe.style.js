@@ -182,4 +182,5 @@ export const SButton = styled.button`
   color: #ff6464;
   font-size: 19px;
   text-align: center;
+  cursor: pointer;
 `;

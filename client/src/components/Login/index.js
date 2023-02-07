@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN, ADD_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
-import { BorderBox, LeftBox, LogBox, MainLogContainer, RightBox, ButtonsBox, InputsBox, Button, Input, Label, Form, FormBtnBox, LoginBtn } from '../Login/login.style';
+import LoginImg from '../../assets/loginImg.jpg';
+import { BorderBox, LeftBox, LogBox, MainLogContainer, RightBox, ButtonsBox, InputsBox, Button, Input, Label, Form, FormBtnBox, LoginBtn, SImgWrapper, SLogImg } from '../Login/login.style';
 
 export default function Header() {
   const [formState, setFormState] = useState({ email: '', password: '', firstName: '', lastName: '' });
@@ -50,7 +51,11 @@ export default function Header() {
     <MainLogContainer>
       <BorderBox>
         <LogBox>
-          <LeftBox>SPACE FOR FUTURE ADDS</LeftBox>
+          <LeftBox>
+            <SImgWrapper>
+              <SLogImg src={LoginImg}></SLogImg>
+            </SImgWrapper>
+          </LeftBox>
           <RightBox>
             <ButtonsBox onClick={handleToggle}>
               <Button className={loggingIn ? 'active' : ''}>LOGIN</Button>

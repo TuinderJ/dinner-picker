@@ -11,7 +11,6 @@ export const BodyContainer = styled.div`
   display: flex;
   text-align: center;
   justify-content: center;
-  overflow: hidden;
 `;
 
 export const MainContainer = styled.div`
@@ -83,8 +82,8 @@ export const SignUpBtnContainer = styled.div`
 `;
 
 export const SignUpLink = styled(Link)`
-  width: 10rem;
-  height: 4rem;
+  /* width: 1000px; */
+  /* height: 4rem; */
   background-color: #1b100e;
   border: none;
   font-family: 'Nunito', sans-serif;

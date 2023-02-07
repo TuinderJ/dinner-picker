@@ -36,7 +36,23 @@ export const LeftBox = styled.div`
   width: 60%;
   height: 100%;
   background-color: #ff6464;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
+
+export const SImgWrapper = styled.div`
+  width: 80%;
+  height: 80%;
+  background-color: #ff6464;
+  overflow: hidden;
+  display: flex;
+`;
+
+export const SLogImg = styled.img`
+  width: 100%;
+`;
+
 export const RightBox = styled.div`
   width: 40%;
   height: 100%;
