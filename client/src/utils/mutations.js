@@ -49,7 +49,7 @@ export const ADD_RECIPE = gql`
     $favorite: Boolean
     $images: [String]
     $ingredients: [String]
-    $instructions: Instructions
+    $instructions: [Instructions]
     $name: String!
     $newImages: NewImages
     $newOriginalImages: NewOriginalImages

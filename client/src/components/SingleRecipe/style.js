@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const Root = styled.div`
---Pinkysh: #ff6464;
---paperYellow: #fff1d8;
---smokyBlack: #1b100e;
+  --Pinkysh: #ff6464;
+  --paperYellow: #fff1d8;
+  --smokyBlack: #1b100e;
 `;
 
 export const Body = styled.body`
@@ -21,16 +21,11 @@ export const Img = styled.img`
   height: 90%;
 `;
 
-
-export const H2 = styled.h2`
-  padding-left: 1em;
-`;
-
 const RecipeInfo = styled.div`
   margin-top: 3em;
   border-bottom: solid 1px var(--smokyBlack);
   background-color: var(--paperYellow);
-  width: 85vw;    
+  width: 85vw;
   box-shadow: 4px 4px 10px var(--smokyBlack);
 `;
 
@@ -43,11 +38,11 @@ const RecipeDisplay = styled.div`
   flex-direction: row;
   margin: 1em auto;
   width: 85vw;
-  flex-wrap: true; 
+  flex-wrap: true;
 `;
 
 const RecipePic = styled.div`
-  border-radius: 18%;    
+  border-radius: 18%;
   width: 20em;
   height: 20em;
   margin-left: 2em;
@@ -57,7 +52,7 @@ const RecipePic = styled.div`
 const LeftDiv = styled.div`
   width: 24em;
   padding: 1em;
-  align-content: center;   
+  align-content: center;
 `;
 
 const MiddleDiv = styled.div`
@@ -72,9 +67,8 @@ const Ingredients = styled.div`
 `;
 
 const Instructions = styled(Ingredients)`
-padding-right: 1em;
+  padding-right: 1em;
 `;
-
 
 const StyledMedia = `
   @media only screen and (max-width: 900px) {
@@ -133,6 +127,4 @@ const StyledMedia = `
         margin-top: 1em;
     }
 
-    `
-  
-
+    `;

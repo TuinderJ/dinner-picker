@@ -6,8 +6,8 @@ function MenuItem({ recipe }) {
   const [vetoMenuItem, { error: vetoMenuItemError }] = useMutation(VETO_MENU_ITEM, { refetchQueries: [{ query: QUERY_MENU }] });
   const [removeMenuItem, { error: removeMenuItemError }] = useMutation(REMOVE_MENU_ITEM, { refetchQueries: [{ query: QUERY_MENU }] });
 
-  const handleVeto = async recipeId => await vetoMenuItem({ variables: { recipeId: recipe._id } });
-  const handleRemove = async recipeId => await removeMenuItem({ variables: { recipeId: recipe._id } });
+  const handleVeto = async () => await vetoMenuItem({ variables: { recipeId: recipe._id } });
+  const handleRemove = async () => await removeMenuItem({ variables: { recipeId: recipe._id } });
 
   return (
     <div className='recipeLog'>

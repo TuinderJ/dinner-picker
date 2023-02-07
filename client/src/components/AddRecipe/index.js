@@ -1,4 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { QUERY_MENU } from '../../utils/queries';
+import { ADD_RECIPE } from '../../utils/mutations';
+
 import {
   AddBody,
   StyleSquare,
@@ -24,8 +28,9 @@ import {
 import PastaIMG from '../../assets/pasta.jpg';
 
 export default function AddRecipe({ setActivePage }) {
+  const [addRecipe, { error: addRecipeError }] = useMutation(ADD_RECIPE, { refetchQueries: [{ query: QUERY_MENU }] });
   useEffect(() => setActivePage('AddRecipe'), []);
-  const [formState, setFormState] = useState({ name: 'Test', category: 'Dinner', cookTime: 'Stuff', description: 'Cool Thing', ingredients: '1 thing stuff, 2 stuff things', instructions: 'Do a thing, Do another thing' });
+  const [formState, setFormState] = useState({ name: '', category: '', cookTime: '', description: '', ingredients: '', instructions: '' });
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -47,8 +52,10 @@ export default function AddRecipe({ setActivePage }) {
       description: form.description.value,
       ingredients,
       instructions,
+      images: ['http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg'],
     };
-    console.log(recipe);
+    const { data } = await addRecipe({ variables: { ...recipe } });
+    if (data.addRecipe) window.location.assign(`/Recipe/${data.addRecipe._id}`);
   };
   return (
     <AddBody>
