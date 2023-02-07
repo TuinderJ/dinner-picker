@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 export const BodyContainer = styled.div`
   background-color: #fff1d8;
   width: 100%;
-  height: 88vh;
+  height: 950px;
   display: flex;
   text-align: center;
   justify-content: center;

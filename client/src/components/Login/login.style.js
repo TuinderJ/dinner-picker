@@ -1,18 +1,9 @@
-import styled from "styled-components";
-
-// COLORS:
-// Pinkysh #FF6464
-// Paper Yellow #FFF1D8
-// Smoky Black #1B100E
-
-// FONTS:
-// font-family: 'Berkshire Swash', cursive; <---TITLES
-// font-family: 'Nunito', sans-serif; < --- MAIN
+import styled from 'styled-components';
 
 export const MainLogContainer = styled.div`
   background-color: #fff1d8;
   width: 100%;
-  height: 88vh;
+  height: 950px;
   display: flex;
   text-align: center;
   justify-content: center;
@@ -59,7 +50,7 @@ export const RightBox = styled.div`
 
 export const ButtonsBox = styled.div`
   width: 90%;
-  height: 30%;
+  height: 10vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,7 +59,7 @@ export const ButtonsBox = styled.div`
 
 export const Button = styled.button`
   width: 30%;
-  height: 20%;
+  height: 4vh;
   background-color: transparent;
   color: #1b100e;
   font-size: 19px;
@@ -129,8 +120,8 @@ export const Input = styled.input`
   margin-top: 15px;
   padding: 2px;
   display: flex;
-  
-  &:active {    
+
+  &:active {
     border: none;
   }
 `;
@@ -142,9 +133,9 @@ export const FormBtnBox = styled.div`
 `;
 
 export const LoginBtn = styled.button`
-width: 130px;
-height: 50px;
-background-color: #1b100e;
-color: #FFF1D8;
-font-size: 1.3rem;
-`
+  width: 130px;
+  height: 50px;
+  background-color: #1b100e;
+  color: #fff1d8;
+  font-size: 1.3rem;
+`;
