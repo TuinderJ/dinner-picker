@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 // COLORS:
 // Pinkysh #FF6464
@@ -69,7 +68,7 @@ export const SFormContainer = styled.div`
   align-items: center;
 `;
 
-export const SForm = styled.div`
+export const SForm = styled.form`
   width: 90%;
   height: 90%;
 `;

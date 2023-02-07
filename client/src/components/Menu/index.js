@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_MENU } from '../../utils/queries';
-import { MAKE_MENU, MAKE_MENU_FAVORITES_ONLY, MAKE_MENU_FAVORITES_WEIGHTED, CLEAR_MENU, VETO_MENU_ITEM, REMOVE_MENU_ITEM } from '../../utils/mutations';
+import { MAKE_MENU, MAKE_MENU_FAVORITES_ONLY, MAKE_MENU_FAVORITES_WEIGHTED, CLEAR_MENU } from '../../utils/mutations';
 import MenuItem from '../MenuItem';
 
 export default function Menu({ setActivePage }) {
