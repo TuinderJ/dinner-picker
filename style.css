@@ -91,10 +91,7 @@ img {
     flex-direction: row; */
 }
 
-
-
-h2 {
-    
+h2 { 
     padding-left: 1em;
 }
 
@@ -103,8 +100,7 @@ h2 {
     flex-direction: row;
     margin-top: 1em;
     width: 100%;
-    flex-wrap: true;
-    
+    flex-wrap: true; 
 }
 
 .recipePic {
@@ -113,7 +109,6 @@ h2 {
     height: 20em;
     margin-left: 2em;
     margin-right: 2em;
-
 }
 
 
