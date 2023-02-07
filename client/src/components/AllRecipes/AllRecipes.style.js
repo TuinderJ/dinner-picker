@@ -6,9 +6,32 @@ import { Link } from 'react-router-dom';
 // Paper Yellow #FFF1D8
 // Smoky Black #1B100E
 
+export const AllBody = styled.div`
+  width: 100vw;
+  /* height: 88vh; */
+  background-color: #fff1d8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Nunito', sans-serif;
+`;
+
+export const StyleSquare = styled.div`
+  width: 97%;
+  /* height: 95%; */
+  border: 2px solid #1b100e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const CardsContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  /* height: 90%; */
+  margin-top: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 // :root {
