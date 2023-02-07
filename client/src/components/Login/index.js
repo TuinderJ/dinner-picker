@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN, ADD_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
-import { BorderBox, LeftBox, LogBox, MainLogContainer, RightBox, ButtonsBox, InputsBox, Button, Input, Label, Form, FormBtnBox, LoginBtn } from '../Login/login.style';
+import { BorderBox, LeftBox, LogBox, MainLogContainer, RightBox, ButtonsBox, InputsBox, Button, Input, Label, Form, FormBtnBox, LoginBtn } from './style';
 
 export default function Header() {
   const [formState, setFormState] = useState({ email: '', password: '', firstName: '', lastName: '' });

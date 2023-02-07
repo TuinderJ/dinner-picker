@@ -18,7 +18,7 @@ const SingleRecipe = ({ setActivePage }) => {
           <div className='recipeDisplay'>
             <div className='leftDiv'>
               <div className='imageDiv'>
-                <img src={data.recipe.images[0]} alt='' className='recipePic' />
+                <img src={data.recipe.images[0]} alt={data.recipe.name} className='recipePic' />
               </div>
 
               <div className='ingredientsDiv'>

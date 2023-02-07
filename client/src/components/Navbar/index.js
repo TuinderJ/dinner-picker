@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavbarBackground, LogBtn, NavbarContainer, LogoContainer, Logo, ListContainer, LinksContainer, NavbarLink, LittleDot, LogButtonContainer, BlackSquare } from './navbar.style';
+import { NavbarBackground, LogBtn, NavbarContainer, LogoContainer, Logo, ListContainer, LinksContainer, NavbarLink, LittleDot, LogButtonContainer, BlackSquare } from './style';
 import LogoPng from '../../assets/logo.png';
 import Auth from '../../utils/auth';
 import { Link } from 'react-router-dom';
