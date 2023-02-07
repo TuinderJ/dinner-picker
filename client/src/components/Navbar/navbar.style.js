@@ -132,7 +132,7 @@ export const NavbarLink = styled(Link)`
   font-size: 20px;
 
   &.active {
-    color: red;
+    color: #ff6464;
   }
 
   @media (max-width: 768px) {
