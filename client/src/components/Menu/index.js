@@ -3,6 +3,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_MENU } from '../../utils/queries';
 import { MAKE_MENU, MAKE_MENU_FAVORITES_ONLY, MAKE_MENU_FAVORITES_WEIGHTED, CLEAR_MENU, VETO_MENU_ITEM, REMOVE_MENU_ITEM } from '../../utils/mutations';
 import MenuItem from '../MenuItem';
+import { AllBody, SBtn, SForm, SInput, SInputWrapper, SLabel, SOption, SSelect, StyleSquare } from './menu.style';
 
 export default function Menu({ setActivePage }) {
   const { loading, data } = useQuery(QUERY_MENU);
@@ -58,15 +59,32 @@ export default function Menu({ setActivePage }) {
               </div>
             </>
           ) : (
-            <form onSubmit={handleFormSubmit}>
-              <input onChange={handleChange} type='number' name='numberOfMenuItems' />
-              <select onChange={handleChange}>
-                <option value='ALL_RANDOM'>All Random</option>
-                <option value='FAVORITES_ONLY'>Favorites Only</option>
-                <option value='FAVORITE_WEIGHTED'>Favorite Weighted</option>
-              </select>
-              <button type='submit'>Make Menu</button>
-            </form>
+            <AllBody>
+              <StyleSquare>
+                <SForm onSubmit={handleFormSubmit}>
+                  <SInputWrapper>
+                    <SLabel htmlFor='numberOfMenuItems'>How many recipes you want?</SLabel>
+                    <SInput onChange={handleChange} type='number' name='numberOfMenuItems' required></SInput>
+                  </SInputWrapper>
+                  <SSelect onChange={handleChange}>
+                    <SOption value='ALL_RANDOM'>All Random</SOption>
+                    <SOption value='ALL_RANDOM'>Favorites Only</SOption>
+                    <SOption value='ALL_RANDOM'>Favorite Weighted</SOption>
+                  </SSelect>
+                  <SBtn>SUBMIT</SBtn>
+                </SForm>
+              </StyleSquare>
+            </AllBody>
+
+            // <form onSubmit={handleFormSubmit}>
+            //   <input onChange={handleChange} type='number' name='numberOfMenuItems' />
+            //   <select onChange={handleChange}>
+            //     <option value='ALL_RANDOM'>All Random</option>
+            //     <option value='FAVORITES_ONLY'>Favorites Only</option>
+            //     <option value='FAVORITE_WEIGHTED'>Favorite Weighted</option>
+            //   </select>
+            //   <button type='submit'>Make Menu</button>
+            // </form>
           )}
         </div>
       )}

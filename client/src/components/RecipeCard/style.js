@@ -1,14 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-// COLORS:
-// Pinkysh #FF6464
-// Paper Yellow #FFF1D8
-// Smoky Black #1B100E
-
-// FONTS
-// font-family: 'Nunito', sans-serif;
-
 export const SCARD = styled.div`
   border: solid 2px #1b100e;
   width: 300px;
