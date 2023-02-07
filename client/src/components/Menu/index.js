@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
 export default function Menu({ setActivePage }) {
   useEffect(() => {
-    setActivePage("Menu");
+    setActivePage('Menu');
   }, []);
   return <div>YOUT MENU GOES HERE</div>;
 }
