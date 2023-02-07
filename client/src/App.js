@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 // Pages
 import LandingPage from './components/LandingPage';
 import AddRecipe from './components/AddRecipe';
+import EditRecipe from './components/EditRecipe';
 import AllRecipes from './components/AllRecipes';
 import Menu from './components/Menu';
 import Login from './components/Login';
@@ -37,6 +38,7 @@ export default function App() {
       <Routes>
         <Route path='/' element={<LandingPage setActivePage={setActivePage} />} />
         <Route path='/AddRecipe' element={<AddRecipe setActivePage={setActivePage} />} />
+        <Route path='/EditRecipe/:recipeId' element={<EditRecipe setActivePage={setActivePage} />} />
         <Route path='/AllRecipes' element={<AllRecipes setActivePage={setActivePage} />} />
         <Route path='/Recipe/:recipeId' element={<SingleRecipe setActivePage={setActivePage} />} />
         <Route path='/Menu' element={<Menu setActivePage={setActivePage} />} />

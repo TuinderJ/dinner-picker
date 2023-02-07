@@ -1,10 +1,21 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const RecipeHeader = styled.header`
   background: #000;
   color: #fff;
   text-align: center;
   padding: 0.25rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+`;
+
+export const EditLink = styled(Link)`
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.25rem;
 `;
 
 export const StyledH2 = styled.h2`
@@ -13,6 +24,8 @@ export const StyledH2 = styled.h2`
     padding-left: none;
   }
 `;
+
+export const IconContainer = styled.div``;
 
 export const StyledUl = styled.ul`
   padding-left: 0;

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import { useMutation } from '@apollo/client';
 import { QUERY_MENU } from '../../utils/queries';
 import { ADD_RECIPE } from '../../utils/mutations';
@@ -29,8 +30,9 @@ import PastaIMG from '../../assets/pasta.jpg';
 
 export default function AddRecipe({ setActivePage }) {
   const [addRecipe, { error: addRecipeError }] = useMutation(ADD_RECIPE, { refetchQueries: [{ query: QUERY_MENU }] });
-  useEffect(() => setActivePage('AddRecipe'), []);
   const [formState, setFormState] = useState({ name: '', category: '', cookTime: '', description: '', ingredients: '', instructions: '' });
+
+  useEffect(() => setActivePage('AddRecipe'), []);
 
   const handleChange = e => {
     const { name, value } = e.target;
