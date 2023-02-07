@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
+import RecipeCard from '../RecipeCard';
 import { CardsContainer } from './AllRecipes.style';
 import { QUERY_RECIPES } from '../../utils/queries';
 
@@ -10,27 +11,5 @@ export default function AllRecipes({ setActivePage }) {
     setActivePage('AllRecipes');
   }, []);
 
-  return (
-    <>
-      {loading ? (
-        <div>Loading</div>
-      ) : (
-        <CardsContainer>
-          {data?.recipes[0] ? (
-            data.recipes.map(recipe => (
-              <div key={recipe._id} className='menuDisplay'>
-                <div className='card'>
-                  <div className='recipeName'>
-                    <p className='title'>{recipe.name}</p>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div>NO RECIPES</div>
-          )}
-        </CardsContainer>
-      )}
-    </>
-  );
+  return <>{loading ? <div>Loading</div> : <CardsContainer>{data?.recipes[0] ? data.recipes.map(recipe => <RecipeCard key={recipe._id} recipe={recipe} />) : <div>NO RECIPES</div>}</CardsContainer>}</>;
 }

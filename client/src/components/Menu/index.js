@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_MENU } from '../../utils/queries';
 import { MAKE_MENU, MAKE_MENU_FAVORITES_ONLY, MAKE_MENU_FAVORITES_WEIGHTED, CLEAR_MENU, VETO_MENU_ITEM, REMOVE_MENU_ITEM } from '../../utils/mutations';
+import MenuItem from '../MenuItem';
 
 export default function Menu({ setActivePage }) {
   const { loading, data } = useQuery(QUERY_MENU);
@@ -10,8 +11,6 @@ export default function Menu({ setActivePage }) {
   const [makeMenuFavoritesOnly, { error: favoritesOnlyMenuError }] = useMutation(MAKE_MENU_FAVORITES_ONLY, { refetchQueries: [{ query: QUERY_MENU }] });
   const [makeMenuFavoriteWeighted, { error: favoriteWeightedMenuError }] = useMutation(MAKE_MENU_FAVORITES_WEIGHTED, { refetchQueries: [{ query: QUERY_MENU }] });
   const [clearMenu, { error: clearMenuError }] = useMutation(CLEAR_MENU, { refetchQueries: [{ query: QUERY_MENU }] });
-  const [vetoMenuItem, { error: vetoMenuItemError }] = useMutation(VETO_MENU_ITEM, { refetchQueries: [{ query: QUERY_MENU }] });
-  const [removeMenuItem, { error: removeMenuItemError }] = useMutation(REMOVE_MENU_ITEM, { refetchQueries: [{ query: QUERY_MENU }] });
 
   const [formState, setFormState] = useState({ numberOfMenuItems: '', menuType: 'ALL_RANDOM' });
 
@@ -42,8 +41,6 @@ export default function Menu({ setActivePage }) {
   };
 
   const handleClearMenu = async e => await clearMenu({ variables: { numberOfMenuItems: formState.numberOfMenuItems } });
-  const handleVeto = async recipeId => await vetoMenuItem({ variables: { recipeId } });
-  const handleRemove = async recipeId => await removeMenuItem({ variables: { recipeId } });
 
   return (
     <>
@@ -53,18 +50,12 @@ export default function Menu({ setActivePage }) {
         <div>
           {data?.menu[0] ? (
             <>
-              {data.menu.map(recipe => (
-                <div key={recipe._id} className='menuDisplay'>
-                  <div className='card'>
-                    <div className='recipeName'>
-                      <p className='title'>{recipe.name}</p>
-                      <button onClick={() => handleVeto(recipe._id)}>Veto</button>
-                      <button onClick={() => handleRemove(recipe._id)}>Remove</button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              <button onClick={handleClearMenu}>Clear Menu</button>
+              <div className='menu'>
+                {data.menu.map(recipe => (
+                  <MenuItem recipe={recipe} />
+                ))}
+                <button onClick={handleClearMenu}>Clear Menu</button>
+              </div>
             </>
           ) : (
             <form onSubmit={handleFormSubmit}>

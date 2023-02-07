@@ -28,7 +28,7 @@ const typeDefs = gql`
     favorite: Boolean
     images: [String]
     ingredients: [String]
-    instructions: instructions
+    instructions: [instructions]
     lastUsed: Int
     name: String
     newImages: newImages
@@ -132,7 +132,7 @@ const typeDefs = gql`
       favorite: Boolean
       images: [String]
       ingredients: [String]
-      instructions: Instructions
+      instructions: [Instructions]
       lastUsed: Int
       name: String!
       newImages: NewImages

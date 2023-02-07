@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 // COLORS:
 // Pinkysh #FF6464
@@ -7,17 +7,15 @@ import { Link } from "react-router-dom";
 // Smoky Black #1B100E
 
 export const CardsContainer = styled.div`
-width: 100%;
-height: 100%;
-background-color: aquamarine;
-`
+  width: 100%;
+  height: 100%;
+`;
 
 // :root {
 //     --Pinkysh: #ff6464;
 //     --paperYellow: #fff1d8;
 //     --smokyBlack: #1b100e;
 // }
-
 
 // body {
 //     background-color: var(--Pinkysh);
@@ -34,8 +32,7 @@ background-color: aquamarine;
 //     flex-direction: row;
 //     justify-content: center;
 //     flex-wrap: wrap;
-    
-    
+
 // }
 
 // .card {
@@ -44,13 +41,13 @@ background-color: aquamarine;
 //     /* border: solid 2px var(--russian-violet); */
 //     /* background: linear-gradient(to right, white, var(--Nyanza)); */
 //     /* border-radius: 5px; */
-    
+
 //     width: 14em;
 //     height: 22em;
 //     margin: 1em;
 //     box-shadow: 4px 4px 10px var(--smokyBlack);
 //     text-align: left;
-      
+
 // }
 
 // .recipeName {
@@ -66,7 +63,7 @@ background-color: aquamarine;
 //     padding-top: 1em;
 //     margin-left: .8em;
 //     color: white;
-    
+
 // }
 
 // .contents {
