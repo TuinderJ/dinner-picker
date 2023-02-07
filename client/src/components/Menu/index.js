@@ -75,16 +75,6 @@ export default function Menu({ setActivePage }) {
                 </SForm>
               </StyleSquare>
             </AllBody>
-
-            // <form onSubmit={handleFormSubmit}>
-            //   <input onChange={handleChange} type='number' name='numberOfMenuItems' />
-            //   <select onChange={handleChange}>
-            //     <option value='ALL_RANDOM'>All Random</option>
-            //     <option value='FAVORITES_ONLY'>Favorites Only</option>
-            //     <option value='FAVORITE_WEIGHTED'>Favorite Weighted</option>
-            //   </select>
-            //   <button type='submit'>Make Menu</button>
-            // </form>
           )}
         </div>
       )}
