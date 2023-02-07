@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
+  "engines": {
+    "node": "16.17.1"
+  },
   "scripts": {
     "start": "node server --ignore client",
     "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\"",

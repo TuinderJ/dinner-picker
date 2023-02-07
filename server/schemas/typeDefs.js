@@ -28,7 +28,7 @@ const typeDefs = gql`
     favorite: Boolean
     images: [String]
     ingredients: [String]
-    instructions: instructions
+    instructions: [instructions]
     lastUsed: Int
     name: String
     newImages: newImages
@@ -132,7 +132,7 @@ const typeDefs = gql`
       favorite: Boolean
       images: [String]
       ingredients: [String]
-      instructions: Instructions
+      instructions: [Instructions]
       lastUsed: Int
       name: String!
       newImages: NewImages
@@ -173,10 +173,12 @@ const typeDefs = gql`
       uuid: String
       yield: String
     ): Recipe
+    favoriteRecipe(recipeId: ID!): Recipe
     deleteRecipe(recipeId: ID!): [Recipe]
     makeMenu(numberOfMenuItems: Int!): [Recipe]
     makeMenuFavoritesOnly(numberOfMenuItems: Int!): [Recipe]
     makeMenuFavoriteWeighted(numberOfMenuItems: Int!): [Recipe]
+    clearMenu: [Recipe]
     vetoMenuItem(recipeId: ID!): [Recipe]
     removeMenuItem(recipeId: ID!): [Recipe]
   }
