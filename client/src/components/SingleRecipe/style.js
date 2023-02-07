@@ -1,35 +1,46 @@
 import styled from 'styled-components';
 
-// export const Root = styled.div`
-// --Pinkysh: #ff6464;
-// --paperYellow: #fff1d8;
-// --smokyBlack: #1b100e;
-// `;
-
-export const Body = styled.body`
-  background-color: var(--Pinkysh);
-  color: var(--smokyBlack);
-  justify-content: center;
-  display: flex;
-  align-items: center;
+export const RecipeHeader = styled.header`
+  background: #000;
+  color: #fff;
+  text-align: center;
+  padding: 0.25rem 0;
 `;
 
-export const ImgDiv = styled.img`
-  border: solid 5px var(--Pinkysh);
-  width: 100%;
-  height: 90%;
+export const StyledH2 = styled.h2`
+  @media screen and (max-width: 900px) {
+    margin-top: 1em;
+    padding-left: none;
+  }
 `;
 
-export const RecipeInfo = styled.div`
-  margin-top: 3em;
-  border-bottom: solid 1px var(--smokyBlack);
+export const StyledUl = styled.ul`
+  padding-left: 0;
+  list-style: none;
+
+  @media screen and (max-width: 900px) {
+    padding: 0;
+  }
+`;
+
+export const StyledLi = styled.li`
+  margin-bottom: 0.75rem;
+  border-bottom: 1px dotted #444;
+`;
+
+export const RecipeContainer = styled.div`
+  margin: 3em auto;
   background-color: var(--paperYellow);
   width: 85vw;
-  box-shadow: 4px 4px 10px var(--smokyBlack);
-`;
+  border: 2px solid #1b100e;
 
-export const H2 = styled.h2`
-  padding-left: 1em;
+  @media screen and (max-width: 900px) {
+    margin: 0.5rem auto;
+    border: none;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+  }
 `;
 
 export const RecipeDisplay = styled.div`
@@ -38,85 +49,82 @@ export const RecipeDisplay = styled.div`
   margin: 1em auto;
   width: 85vw;
   flex-wrap: true;
+
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin: auto;
+    text-align: left;
+    align-items: center;
+  }
 `;
 
 export const LeftDiv = styled.div`
   width: 24em;
   padding: 1em;
   align-content: center;
+
+  @media screen and (max-width: 900px) {
+    width: 100vw;
+    padding: 0;
+    text-align: left;
+    align-items: center;
+  }
 `;
 
-export const MiddleDiv = styled.div`
-  border-left: solid 2px var(--smokyBlack);
-  height: 45em;
-  padding-right: 1em;
-`;
+export const ImgDiv = styled.img`
+  width: 100%;
 
-export const ImageDiv = styled(Image)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: center;
+  @media screen and (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+  }
 `;
 
 export const Ingredients = styled.div`
   padding-left: 1em;
   padding-top: 1em;
+
+  @media screen and (max-width: 900px) {
+    padding: 0 0.75rem;
+  }
 `;
 
-export const Instructions = styled(Ingredients)`
+export const RightDiv = styled.div`
+  border-left: solid 2px var(--smokyBlack);
+  padding: 0 1em;
+
+  @media screen and (max-width: 900px) {
+    border-left: none;
+    border-top: solid 2px var(--smokyBlack);
+    width: 100vw;
+    padding: 0;
+    margin-top: 1em;
+  }
+`;
+
+export const Instructions = styled.div`
+  padding-left: 1em;
   padding-right: 1em;
-`;
+  padding-top: 1em;
 
-export const IngredientsDiv = styled.div`
-  /* border-top:  solid 2px var(--smokyBlack); */
-  text-align: left;
+  @media screen and (max-width: 900px) {
+    padding: 0 0.75rem;
+  }
 `;
 
 export const StyledMedia = `
-  @media only screen and (max-width: 900px) {
-    .recipeInfo {
-        align-items: center;
-        max-width: 80%;
-        text-align: left;
-    }
-  
-    .recipeDisplay {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        max-width: 80%;
-        margin: auto;
-        text-align: left;
-        align-items: center;
-    }
-  
-    .leftDiv {
-        border-top:  solid 2px var(--smokyBlack);
-        width: 100%;
-        border-top: 2em;
-        text-align: left;
-        align-items: center; 
-    }
-  
-    .imageDiv {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        align-content: center;
-    }
-    
-    .ingredientsDiv {
-        text-align: left;
-    }
-  
+  @media screen and (max-width: 900px) {
     h2 {
         margin-top: 1em;
         padding-left: none;
     }
     
     img {
-        border: solid 5px var(--Pinkysh);
+        border: solid 5px var(--pinkysh);
         width: 1vw;
         height: 1vw;
         margin: auto;

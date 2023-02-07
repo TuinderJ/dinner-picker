@@ -1,21 +1,28 @@
 import styled from 'styled-components';
 
-// export const Root = styled.div`
-// --Pinkysh: #ff6464;
-// --paperYellow: #fff1d8;
-// --smokyBlack: #1b100e;
-// `;
-
 export const MenuDiv = styled.div`
-  margin-top: 3em;
-  border-bottom: solid 1px var(--smokyBlack);
-  background-color: var(--paperYellow);
-  width: 50em;
-  height: 50em;
-  box-shadow: 4px 4px 10px var(--smokyBlack);
+  margin: 1em auto;
+  padding: 2em;
+  border: 2px solid #1b100e;
+  width: 90vw;
+
+  @media screen and (max-width: 500px) {
+    width: 75vw;
+    border: none;
+  }
 `;
 
+export const ClearMenuButton = styled.button`
+  display: block;
+  cursor: pointer;
+  margin: 0 auto;
+  background-color: #1b100e;
+  color: #ff6464;
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+  margin-top: 2rem;
 
-
-
-
+  @media screen and (max-width: 500px) {
+    font-size: 1rem;
+  }
+`;
