@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavbarBackground, LogBtn, NavbarContainer, LogoContainer, Logo, ListContainer, LinksContainer, NavbarLink, LittleDot, LogButtonContainer, BlackSquare } from './style';
+import { NavbarBackground, LogBtn, NavbarContainer, LogoContainer, LinkLogo, Logo, ListContainer, LinksContainer, NavbarLink, LittleDot, LogButtonContainer, BlackSquare } from './style';
 import LogoPng from '../../assets/logo.png';
 import Auth from '../../utils/auth';
 import { Link } from 'react-router-dom';
@@ -11,9 +11,9 @@ export default function Header({ activePage }) {
     <NavbarBackground>
       <NavbarContainer>
         <LogoContainer>
-          <Link to='/'>
+          <LinkLogo to='/'>
             <Logo src={LogoPng} />
-          </Link>
+          </LinkLogo>
         </LogoContainer>
         <ListContainer>
           {Auth.loggedIn() ? (
@@ -36,9 +36,12 @@ export default function Header({ activePage }) {
               </LogButtonContainer>
             </>
           ) : (
-            <LogButtonContainer>
-              <BlackSquare></BlackSquare>
-            </LogButtonContainer>
+            <>
+              <LinksContainer></LinksContainer>
+              <LogButtonContainer>
+                <BlackSquare></BlackSquare>
+              </LogButtonContainer>
+            </>
           )}
         </ListContainer>
       </NavbarContainer>

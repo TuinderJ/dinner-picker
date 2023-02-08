@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN, ADD_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
-import { BorderBox, LeftBox, LogBox, MainLogContainer, RightBox, ButtonsBox, InputsBox, Button, Input, Label, Form, FormBtnBox, LoginBtn } from './style';
+import LoginImg from '../../assets/loginImg.jpg';
+import { BorderBox, LeftBox, LogBox, MainLogContainer, RightBox, ButtonsBox, InputsBox, Button, SInput, Label, SForm, FormBtnBox, LoginBtn, SInputsWrapper, SImgWrapper, SImg } from './style';
 
 export default function Header() {
   const [formState, setFormState] = useState({ email: '', password: '', firstName: '', lastName: '' });
@@ -50,32 +51,44 @@ export default function Header() {
     <MainLogContainer>
       <BorderBox>
         <LogBox>
-          <LeftBox>SPACE FOR FUTURE ADDS</LeftBox>
+          <LeftBox>
+            <SImgWrapper>
+              <SImg src={LoginImg}></SImg>
+            </SImgWrapper>
+          </LeftBox>
           <RightBox>
             <ButtonsBox onClick={handleToggle}>
               <Button className={loggingIn ? 'active' : ''}>LOGIN</Button>
               <Button className={loggingIn ? '' : 'active'}>SIGN UP</Button>
             </ButtonsBox>
             <InputsBox>
-              <Form onSubmit={handleFormSubmit}>
+              <SForm onSubmit={handleFormSubmit}>
                 {loggingIn ? (
                   <></>
                 ) : (
                   <>
-                    <Label htmlFor='firstName'>First Name:</Label>
-                    <Input type='text' onChange={handleChange} name='firstName' required></Input>
-                    <Label htmlFor='lastName'>Last Name:</Label>
-                    <Input type='text' onChange={handleChange} name='lastName' required></Input>
+                    <SInputsWrapper>
+                      <Label htmlFor='firstName'>First Name:</Label>
+                      <SInput type='text' onChange={handleChange} name='firstName' required></SInput>
+                    </SInputsWrapper>
+                    <SInputsWrapper>
+                      <Label htmlFor='lastName'>Last Name:</Label>
+                      <SInput type='text' onChange={handleChange} name='lastName' required></SInput>
+                    </SInputsWrapper>
                   </>
                 )}
-                <Label htmlFor='email'>Email:</Label>
-                <Input name='email' onChange={handleChange} type='email' required></Input>
-                <Label htmlFor='password'>Password:</Label>
-                <Input name='password' onChange={handleChange} type='password' required></Input>
+                <SInputsWrapper>
+                  <Label htmlFor='email'>Email:</Label>
+                  <SInput name='email' onChange={handleChange} type='email' required></SInput>
+                </SInputsWrapper>
+                <SInputsWrapper>
+                  <Label htmlFor='password'>Password:</Label>
+                  <SInput name='password' onChange={handleChange} type='password' required></SInput>
+                </SInputsWrapper>
                 <FormBtnBox>
                   <LoginBtn type='submit'>{loggingIn ? 'LOGIN' : 'SIGN UP'}</LoginBtn>
                 </FormBtnBox>
-              </Form>
+              </SForm>
             </InputsBox>
           </RightBox>
         </LogBox>

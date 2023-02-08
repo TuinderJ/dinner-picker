@@ -5,7 +5,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_RECIPE } from '../../utils/queries';
 import { FAVORITE_RECIPE } from '../../utils/mutations';
 
-import { RecipeHeader, RecipeContainer, RecipeDisplay, StyledH2, StyledUl, StyledLi, LeftDiv, RightDiv, Ingredients, Instructions, EditLink, IconContainer, ImgDiv } from './style';
+import { RecipeWrapper, RecipeHeader, RecipeContainer, RecipeDisplay, StyleSquare, StyledH2, StyledUl, StyledLi, LeftDiv, RightDiv, Ingredients, Instructions, EditLink, IconContainer, ImgDiv, AllBody, StyledMedia } from './style';
 
 const SingleRecipe = ({ setActivePage }) => {
   const { recipeId } = useParams();
@@ -24,6 +24,9 @@ const SingleRecipe = ({ setActivePage }) => {
       {loading ? (
         <div>loading</div>
       ) : (
+        // <AllBody>
+        // <StyleSquare>
+        // <RecipeWrapper>
         <RecipeContainer>
           <RecipeHeader>
             <EditLink to={`/EditRecipe/${data.recipe._id}`}>Edit</EditLink>
@@ -46,6 +49,9 @@ const SingleRecipe = ({ setActivePage }) => {
             </RightDiv>
           </RecipeDisplay>
         </RecipeContainer>
+        // </RecipeWrapper>
+        // </StyleSquare>
+        // </AllBody>
       )}
     </>
   );

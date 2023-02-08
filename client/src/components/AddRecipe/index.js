@@ -97,11 +97,11 @@ export default function AddRecipe({ setActivePage }) {
                 <TextAreaWrapper>
                   <InputWrapper>
                     <SLabel htmlFor='ingredients'>Ingredients: {`(Separate by commas)`}</SLabel>
-                    <STextArea name='ingredients' rows='3' value={formState.ingredients} onChange={handleChange}></STextArea>
+                    <STextArea name='ingredients' rows='4' value={formState.ingredients} onChange={handleChange}></STextArea>
                   </InputWrapper>
                   <InputWrapper>
                     <SLabel htmlFor='instructions'>Instructions: {`(Separate by commas)`}</SLabel>
-                    <STextArea name='instructions' rows='3' value={formState.instructions} onChange={handleChange}></STextArea>
+                    <STextArea name='instructions' rows='4' value={formState.instructions} onChange={handleChange}></STextArea>
                   </InputWrapper>
                 </TextAreaWrapper>
                 <SBtnWrapper>
