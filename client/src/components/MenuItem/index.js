@@ -15,12 +15,8 @@ function MenuItem({ recipe }) {
       <SmallImage src={recipe.images[0]} alt={recipe.name} />
       <RecipeSmall to={`/Recipe/${recipe._id}`}>{recipe.name}</RecipeSmall>
       <Buttons>
-        <EditButton className='editButton' onClick={handleVeto}>
-          Veto
-        </EditButton>
-        <EditButton className='editButton' onClick={handleRemove}>
-          Delete
-        </EditButton>
+        <EditButton onClick={handleVeto}>Veto</EditButton>
+        <EditButton onClick={handleRemove}>Delete</EditButton>
       </Buttons>
     </RecipeLog>
   );
