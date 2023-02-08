@@ -21,17 +21,21 @@ export default function Menu({ setActivePage }) {
 
   const handleFormSubmit = async e => {
     e.preventDefault();
-    switch (formState.menuType) {
-      case 'ALL_RANDOM':
-        await makeMenu({ variables: { numberOfMenuItems: Number(formState.numberOfMenuItems) } });
-        break;
-      case 'FAVORITES_ONLY':
-        await makeMenuFavoritesOnly({ variables: { numberOfMenuItems: Number(formState.numberOfMenuItems) } });
-        break;
-      case 'FAVORITE_WEIGHTED':
-        await makeMenuFavoriteWeighted({ variables: { numberOfMenuItems: Number(formState.numberOfMenuItems) } });
-        break;
-      default:
+    try {
+      switch (formState.menuType) {
+        case 'ALL_RANDOM':
+          await makeMenu({ variables: { numberOfMenuItems: Number(formState.numberOfMenuItems) } });
+          break;
+        case 'FAVORITES_ONLY':
+          await makeMenuFavoritesOnly({ variables: { numberOfMenuItems: Number(formState.numberOfMenuItems) } });
+          break;
+        case 'FAVORITE_WEIGHTED':
+          await makeMenuFavoriteWeighted({ variables: { numberOfMenuItems: Number(formState.numberOfMenuItems) } });
+          break;
+        default:
+      }
+    } catch (err) {
+      alert(err);
     }
   };
 

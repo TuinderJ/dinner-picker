@@ -30,6 +30,14 @@ const resolvers = {
   Mutation: {
     addUser: async (parent, args) => {
       const user = await User.create(args);
+      const family = await Family.create({
+        name: user.lastName,
+        members: [user._id],
+      });
+
+      user.familyId = family._id;
+
+      await user.save();
       const token = signToken(user);
 
       return { token, user };
@@ -94,12 +102,12 @@ const resolvers = {
         throw new Error('Recipe not found');
       }
 
-      const newRecipe = {
-        ...family.recipes[recipeIndex],
-        ...args,
-      };
-
-      family.recipes[recipeIndex] = newRecipe;
+      family.recipes[recipeIndex].name = args.name;
+      family.recipes[recipeIndex].category = args.category;
+      family.recipes[recipeIndex].cookTime = args.cookTime;
+      family.recipes[recipeIndex].description = args.description;
+      family.recipes[recipeIndex].ingredients = args.ingredients;
+      family.recipes[recipeIndex].instructions = args.instructions;
 
       await family.save();
 
@@ -136,6 +144,8 @@ const resolvers = {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId);
+
+      if (family.recipes.length === 0) throw new Error('No recipes to make a menu');
 
       const recipes = [...family.recipes];
       family.makeMenu({

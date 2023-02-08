@@ -6,6 +6,11 @@ export const AllBody = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  margin-bottom: 20px;
+
+  @media screen and (max-width: 576px) {
+    margin-bottom: 0;
+  }
 `;
 
 export const StyleSquare = styled.div`
@@ -23,11 +28,13 @@ export const StyleSquare = styled.div`
 export const CardsContainer = styled.div`
   width: 98%;
   margin-top: 80px;
+  margin-bottom: 80px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 
   @media screen and (max-width: 576px) {
     margin-top: 10px;
+    margin-bottom: 10px;
   }
 `;

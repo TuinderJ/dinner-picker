@@ -1,41 +1,41 @@
 import styled from 'styled-components';
 
-// COLORS:
-// pinkysh #FF6464
-// Paper Yellow #FFF1D8
-// Smoky Black #1B100E
-
-// FONTS:
-// font-family: 'Berkshire Swash', cursive; <---TITLES
-// font-family: 'Nunito', sans-serif; < --- MAIN
-
 // BACKGROUND STYLING
 export const AddBody = styled.div`
   width: 100%;
   height: 950px;
-  background-color: #fff1d8;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Nunito', sans-serif;
+  overflow: hidden;
+
+  @media screen and (max-width: 576px) {
+    max-height: 750px;
+  }
 `;
 
 export const StyleSquare = styled.div`
   width: 97%;
-  height: 95%;
+  height: 97%;
   border: 2px solid #1b100e;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const SContainer = styled.div`
   width: 90%;
   height: 85%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+  @media screen and (max-width: 576px) {
+    width: 90%;
+    height: 95%;
+  }
 `;
 
 //TITLE CONTAINER
@@ -43,42 +43,77 @@ export const STitleWrapper = styled.div`
   width: 100%;
   height: 10%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: #1b100e;
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+    height: 8%;
+  }
 `;
 
 export const STitle = styled.div`
-  width: 90%;
-  height: 100%;
+  display: inline;
   font-size: 30px;
   font-weight: 600;
   color: #fff1d8;
-  display: flex;
-  align-items: center;
+  margin-left: 1.5rem;
+
+  @media screen and (max-width: 576px) {
+    font-size: 25px;
+    width: max-content;
+    margin-left: 0.5rem;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  background-color: var(--smokyBlack);
+  border: none;
+  color: var(--pinkysh);
+  cursor: pointer;
+  padding-right: 1.5rem;
+  font-size: 1.25rem;
+
+  @media screen and (max-width: 576px) {
+    padding-right: 0.5rem;
+  }
 `;
 
 //RECIPE INFORMATION CONTAINER
 export const SFormContainer = styled.div`
   width: 100%;
-  height: 90%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: 92%;
+
+  @media screen and (max-width: 576px) {
+    height: 100%;
+  }
 `;
 
 export const SForm = styled.form`
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+    height: 100%;
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
 `;
 
 export const TopDiv = styled.div`
   width: 100%;
   height: 50%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-wrap: nowrap;
+
+  @media screen and (max-width: 576px) {
+    height: 60%;
+    display: flex;
+    flex-direction: column-reverse;
+  }
 `;
 
 export const InputsContainer = styled.div`
@@ -86,18 +121,28 @@ export const InputsContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+    height: 70%;
+  }
 `;
 
 export const InputWrapper = styled.div`
+  height: 60px;
   display: flex;
   flex-direction: column;
-  color: #1b100e;
+  justify-content: space-evenly;
 `;
 
 export const SLabel = styled.label`
   font-size: 18px;
   font-weight: 600;
+
+  @media screen and (max-width: 576px) {
+    font-size: 15px;
+  }
 `;
 
 export const SInput = styled.input`
@@ -113,6 +158,10 @@ export const SInput = styled.input`
   &:focus {
     border: 2px solid #1b100e;
   }
+
+  @media screen and (max-width: 576px) {
+    width: 95%;
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -121,13 +170,26 @@ export const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+    height: 30%;
+    justify-content: center;
+    align-items: flex-end;
+  }
 `;
 
 export const ImageWrapper = styled.div`
   width: 60%;
   height: 96%;
   overflow: hidden;
-  border: 2px solid;
+  display: flex;
+  align-items: center;
+
+  @media screen and (max-width: 576px) {
+    width: 60%;
+    height: 85%;
+  }
 `;
 
 export const SImage = styled.img`
@@ -137,18 +199,32 @@ export const SImage = styled.img`
 export const BottomDiv = styled.div`
   width: 100%;
   height: 50%;
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+    height: 40%;
+  }
 `;
 
 export const TextAreaWrapper = styled.div`
   width: 100%;
-  height: 80%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
 `;
 
 export const STextArea = styled.textarea`
-  width: 95%;
+  width: 98%;
+  height: 50px;
   background-color: transparent;
   outline: none;
   border: none;
@@ -157,18 +233,30 @@ export const STextArea = styled.textarea`
   color: #1b100e;
   resize: none;
   font-family: 'Nunito', sans-serif;
+  padding: 12px 0px 0px 10px;
 
   &:focus {
     border: 2px solid #1b100e;
+  }
+
+  @media screen and (max-width: 576px) {
+    width: 95%;
   }
 `;
 
 export const SBtnWrapper = styled.div`
   width: 100%;
-  height: 20%;
+  height: 30%;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    align-items: flex-start;
+  }
 `;
 
 export const SButton = styled.button`
@@ -181,4 +269,5 @@ export const SButton = styled.button`
   color: #ff6464;
   font-size: 19px;
   text-align: center;
+  cursor: pointer;
 `;

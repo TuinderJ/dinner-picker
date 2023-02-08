@@ -36,7 +36,8 @@ export const RecipeSmall = styled(Link)`
 
   @media screen and (max-width: 500px) {
     padding-left: 0;
-    font-size: small;
+    font-size: large;
+    font-weight: 600;
     text-align: center;
   }
 `;
@@ -74,5 +75,6 @@ export const EditButton = styled.button`
   @media screen and (max-width: 500px) {
     height: 3em;
     font-size: small;
+    font-weight: 600;
   }
 `;
