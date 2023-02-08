@@ -12,9 +12,7 @@ export default function Header() {
   const [signup, { error: signupError }] = useMutation(ADD_USER);
 
   useEffect(() => {
-    if (Auth.loggedIn()) {
-      window.location.assign('/');
-    }
+    if (Auth.loggedIn()) window.location.assign('/');
   }, []);
 
   const handleFormSubmit = async e => {
@@ -24,16 +22,16 @@ export default function Header() {
         const mutationResponse = await login({ variables: { email: formState.email, password: formState.password } });
         const token = mutationResponse.data.login.token;
         Auth.login(token);
-      } catch (e) {
-        console.log(e);
+      } catch (err) {
+        alert(err);
       }
     } else {
       try {
         const mutationResponse = await signup({ variables: { email: formState.email, password: formState.password, lastName: formState.lastName, firstName: formState.firstName } });
         const token = mutationResponse.data.addUser.token;
         Auth.login(token);
-      } catch (e) {
-        console.log(e);
+      } catch (err) {
+        alert(err);
       }
     }
   };
