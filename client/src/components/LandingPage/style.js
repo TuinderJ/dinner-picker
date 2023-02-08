@@ -88,18 +88,18 @@ export const SignUpLink = styled(Link)`
   height: 60px;
   background-color: #1b100e;
   border: none;
-  font-family: 'Nunito', sans-serif;
   color: #ff6464;
   font-size: 25px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
 
   @media screen and (max-width: 768px) {
-    width: 8.5rem;
-    height: 3.5rem;
-    font-size: 1.6rem;
+    width: 200px;
+    height: 4rem;
+    font-size: 1.3rem;
   }
 
   @media screen and (max-width: 576px) {
@@ -108,16 +108,4 @@ export const SignUpLink = styled(Link)`
     font-size: 1rem;
   }
 `;
-export const SSignUp = styled.div`
-  /* @media screen and (max-width: 768px) {
-    width: 8.5rem;
-    height: 3.5rem;
-    font-size: 1.6rem;
-  }
-
-  @media screen and (max-width: 576px) {
-    width: 7rem;
-    height: 2.7rem;
-    font-size: 1rem;
-  } */
-`;
+export const SSignUp = styled.div``;

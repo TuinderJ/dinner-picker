@@ -92,7 +92,7 @@ export const LinkLogo = styled(Link)`
 
   @media (max-width: 576px) {
     width: 100%;
-    height: 80%;
+    height: 100%;
     border: none;
   }
 `;
@@ -105,7 +105,7 @@ export const Logo = styled.img`
   }
 
   @media (max-width: 576px) {
-    width: 40%;
+    /* width: 30%; */
   }
 `;
 

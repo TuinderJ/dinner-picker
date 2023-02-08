@@ -5,7 +5,7 @@ import { QUERY_MENU } from '../../utils/queries';
 import { MAKE_MENU, MAKE_MENU_FAVORITES_ONLY, MAKE_MENU_FAVORITES_WEIGHTED, CLEAR_MENU } from '../../utils/mutations';
 import MenuItem from '../MenuItem';
 
-import { MenuDiv, ClearMenuButton } from './style';
+import { MenuDiv, ClearMenuButton, SForm, SInput, SSelect, SOption, SBtn, MenuBody, MenuStyleSquare, SWrapper, SLabel, SFormWrapper } from './style';
 
 export default function Menu({ setActivePage }) {
   const { loading, data } = useQuery(QUERY_MENU);
@@ -61,15 +61,34 @@ export default function Menu({ setActivePage }) {
               </MenuDiv>
             </>
           ) : (
-            <form onSubmit={handleFormSubmit}>
-              <input onChange={handleChange} type='number' name='numberOfMenuItems' />
-              <select onChange={handleChange}>
-                <option value='ALL_RANDOM'>All Random</option>
-                <option value='FAVORITES_ONLY'>Favorites Only</option>
-                <option value='FAVORITE_WEIGHTED'>Favorite Weighted</option>
-              </select>
-              <button type='submit'>Make Menu</button>
-            </form>
+            <MenuBody>
+              <MenuStyleSquare>
+                <SFormWrapper>
+                  <SForm onSubmit={handleFormSubmit}>
+                    <SWrapper>
+                      <SLabel htmlFor='numberOfMenuItems'>How many recipes do you want?</SLabel>
+                      <SInput onChange={handleChange} type='number' name='numberOfMenuItems'></SInput>
+                    </SWrapper>
+                    <SSelect onChange={handleChange}>
+                      <SOption value='ALL_RANDOM'>All Random</SOption>
+                      <SOption value='FAVORITES_ONLY'>Favorites Only</SOption>
+                      <SOption value='FAVORITE_WEIGHTED'>Favorite Weighted</SOption>
+                    </SSelect>
+                    <SBtn type='submit'>Make Menu</SBtn>
+                  </SForm>
+                </SFormWrapper>
+              </MenuStyleSquare>
+            </MenuBody>
+
+            // <form onSubmit={handleFormSubmit}>
+            //   <input onChange={handleChange} type='number' name='numberOfMenuItems' />
+            //   <select onChange={handleChange}>
+            //     <option value='ALL_RANDOM'>All Random</option>
+            //     <option value='FAVORITES_ONLY'>Favorites Only</option>
+            //     <option value='FAVORITE_WEIGHTED'>Favorite Weighted</option>
+            //   </select>
+            //   <button type='submit'>Make Menu</button>
+            // </form>
           )}
         </div>
       )}

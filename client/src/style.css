@@ -1,12 +1,13 @@
-:root {
+/* :root {
   --pinkysh: #ff6464;
   --paperYellow: #fff1d8;
   --smokyBlack: #1b100e;
-}
+} */
 
 body {
   margin: 0;
   background-color: #fff1d8;
+  font-family: 'Nunito', sans-serif;
 }
 
 ::-webkit-scrollbar {

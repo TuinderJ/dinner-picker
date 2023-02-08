@@ -1,11 +1,46 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+// Colors:
+// Pinkysh #FF6464
+// Paper Yellow  #FFF1D8
+// Smoky Black #1B100E
+
+// export const AllBody = styled.div`
+//   width: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   overflow: hidden;
+// `;
+
+// export const StyleSquare = styled.div`
+//   width: 97%;
+//   border: 2px solid #1b100e;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   @media screen and (max-width: 576px) {
+//     width: 100%;
+//   }
+// `;
+
+// export const RecipeWrapper = styled.div`
+//   width: 90%;
+//   margin-top: 80px;
+//   /* background-color: red; */
+//   display: flex;
+//   @media screen and (max-width: 576px) {
+//   }
+// `;
+
 export const RecipeHeader = styled.header`
-  background: #000;
-  color: #fff;
-  text-align: center;
-  padding: 0.25rem 0;
+  width: 100%;
+  background: #1b100e;
+  color: #fff1d8;
+  /* text-align: center; */
+  /* padding: 0.25rem 0; */
   display: flex;
   justify-content: space-between;
   align-items: center;
