@@ -26,7 +26,7 @@ import {
   SButton,
   TextAreaWrapper,
 } from './style';
-import PastaIMG from '../../assets/pasta.jpg';
+import dinnerImage from '../../assets/dinner-image.png';
 
 export default function AddRecipe({ setActivePage }) {
   const [addRecipe, { error: addRecipeError }] = useMutation(ADD_RECIPE, { refetchQueries: [{ query: QUERY_MENU }] });
@@ -89,7 +89,7 @@ export default function AddRecipe({ setActivePage }) {
                 </InputsContainer>
                 <ImageContainer>
                   <ImageWrapper>
-                    <SImage src={PastaIMG}></SImage>
+                    <SImage src={dinnerImage}></SImage>
                   </ImageWrapper>
                 </ImageContainer>
               </TopDiv>

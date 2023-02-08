@@ -34,20 +34,11 @@ Have a high-quality README (with unique name, description, technologies used, sc
 
 ## Table of Contents
 
-- [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
 - [Technologies Used](#technologiest-used)
 - [Team and Contributors](#team-and-contributors)
 - [Link To The Deployed Application](#link-to-the-deployed-application)
-
-## Installation
-
-- npm i @apollo/server
-- npm i @apollo/client
-- npm i graphql
-
-To start the app run `npm run dev` in your console.
 
 ## Usage
 
@@ -62,19 +53,19 @@ n/a (Educational)
 
 - React
 - MongoDB/ Mongoose
-- Node.js/ Express
-- Bootstrap for the grid system
+- Node.js
+- Express.js
 - Styled components
 - GraphQL
 
 ## Team and Contributors
 
-- [Joshua Tuinder](#https://github.com/TuinderJ)
-- [Victor Escarcega](#https://github.com/bornoflightning)
-- [Valeryo Haimov](#https://github.com/Valeryo145)
-- [Hugo Garcia](#https://github.com/Hugooloya)
+- [Joshua Tuinder](https://github.com/TuinderJ)
+- [Victor Escarcega](https://github.com/bornoflightning)
+- [Valeryo Haimov](https://github.com/Valeryo145)
+- [Hugo Garcia](https://github.com/Hugooloya)
 
-This project will need to have the above team reviews and approvals prior to making changes on the app.
+This project will need to have the above team's reviews and approvals prior to making changes on the app.
 
 ## Link To The Deployed Application
 
