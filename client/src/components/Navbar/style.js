@@ -220,6 +220,7 @@ export const LogBtn = styled.button`
   background-color: #1b100e;
   color: #ff6464;
   font-size: 19px;
+  cursor: pointer;
 
   @media (max-width: 768px) {
     font-size: 17px;

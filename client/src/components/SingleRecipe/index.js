@@ -14,10 +14,7 @@ const SingleRecipe = ({ setActivePage }) => {
 
   useEffect(() => setActivePage(''), []);
 
-  const handleToggleFavorite = async () => {
-    console.log(data.recipe._id);
-    await favoriteRecipe({ variables: { recipeId: data.recipe._id } });
-  };
+  const handleToggleFavorite = async () => await favoriteRecipe({ variables: { recipeId: data.recipe._id } });
 
   return (
     <>

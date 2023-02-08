@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_MENU, QUERY_RECIPE, QUERY_RECIPES } from '../../utils/queries';
-import { UPDATE_RECIPE } from '../../utils/mutations';
+import { UPDATE_RECIPE, DELETE_RECIPE } from '../../utils/mutations';
 
 import {
   AddBody,
@@ -26,21 +26,30 @@ import {
   SBtnWrapper,
   SButton,
   TextAreaWrapper,
+  DeleteButton,
 } from './style';
-import PastaIMG from '../../assets/pasta.jpg';
 
 export default function EditRecipe({ setActivePage }) {
   const { recipeId } = useParams();
   const { loading, data } = useQuery(QUERY_RECIPE, { variables: { recipeId } });
   const [updateRecipe, { error: updateRecipeError }] = useMutation(UPDATE_RECIPE, { refetchQueries: [{ query: QUERY_RECIPES }, { query: QUERY_MENU }] });
+  const [deleteRecipe, { error: deleteRecipeError }] = useMutation(DELETE_RECIPE, { refetchQueries: [{ query: QUERY_RECIPES }, { query: QUERY_MENU }] });
+
   const [formState, setFormState] = useState({ name: '', category: '', cookTime: '', description: '', ingredients: '', instructions: '' });
 
   useEffect(() => setActivePage('AddRecipe'), []);
 
   useEffect(() => {
-    const ingredients = data.recipe.ingredients.join(', ');
-    const instructions = data.recipe.instructions[0].steps.join(', ');
-    setFormState({ name: data.recipe.name, category: data.recipe.category, cookTime: data.recipe.cookTime, description: data.recipe.description, ingredients, instructions });
+    const ingredients = data?.recipe?.ingredients.join(', ') || '';
+    const instructions = data?.recipe.instructions[0]?.steps.join(', ') || '';
+    setFormState({
+      name: data?.recipe?.name || '',
+      category: data?.recipe?.category || '',
+      cookTime: data?.recipe?.cookTime || '',
+      description: data?.recipe?.description || '',
+      ingredients: ingredients || '',
+      instructions: instructions || '',
+    });
   }, [data]);
 
   const handleChange = e => {
@@ -64,10 +73,14 @@ export default function EditRecipe({ setActivePage }) {
       description: form.description.value,
       ingredients,
       instructions,
-      images: ['http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg'],
     };
     const { data } = await updateRecipe({ variables: { ...recipe } });
     if (data.updateRecipe) window.location.assign(`/Recipe/${data.updateRecipe._id}`);
+  };
+
+  const handleDelete = async () => {
+    const { data } = await deleteRecipe({ variables: { recipeId } });
+    if (data.deleteRecipe) window.location.assign(`/AllRecipes`);
   };
 
   return (
@@ -81,6 +94,7 @@ export default function EditRecipe({ setActivePage }) {
               <SContainer>
                 <STitleWrapper>
                   <STitle>Edit Recipe</STitle>
+                  <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
                 </STitleWrapper>
                 <SFormContainer>
                   <SForm onSubmit={handleFormSubmit}>
@@ -105,7 +119,7 @@ export default function EditRecipe({ setActivePage }) {
                       </InputsContainer>
                       <ImageContainer>
                         <ImageWrapper>
-                          <SImage src={PastaIMG}></SImage>
+                          <SImage src={data.recipe.images[0]} alt={data.recipe.name}></SImage>
                         </ImageWrapper>
                       </ImageContainer>
                     </TopDiv>
