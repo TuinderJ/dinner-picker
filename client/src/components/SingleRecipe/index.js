@@ -32,7 +32,7 @@ const SingleRecipe = ({ setActivePage }) => {
           </RecipeHeader>
           <RecipeDisplay>
             <LeftDiv>
-              <ImgDiv src={data.recipe.images[0]} alt={data.recipe.name} className='recipePic' />
+              <ImgDiv src={data.recipe.images[0]} alt={data.recipe.name} />
               <Ingredients>
                 <StyledH2>Ingredients:</StyledH2>
                 <StyledUl>{data.recipe?.ingredients[0] ? data.recipe.ingredients.map((ingredient, index) => <StyledLi key={index}>{ingredient}</StyledLi>) : <>Nothing Saved</>}</StyledUl>
