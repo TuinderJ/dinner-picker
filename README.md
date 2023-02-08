@@ -43,7 +43,7 @@ Have a high-quality README (with unique name, description, technologies used, sc
 ## Usage
 
 The following image shows the web application's appearance and functionality:
-![Screenshot Recipe]()
+![Screenshot Recipe](/assets/images/screenshot.png)
 
 ## License
 
