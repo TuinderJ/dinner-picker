@@ -188,6 +188,38 @@ const resolvers = {
       });
       return family.getMenu();
     },
+    addMenuItem: async (parent, args, context) => {
+      if (!context.user) throw new AuthenticationError('Not logged in');
+      const user = await User.findById(context.user._id);
+      const family = await Family.findById(user.familyId);
+
+      let recipes = [];
+      switch (family.menuType) {
+        case MENU_TYPES.NORMAL:
+          recipes = [...family.recipes];
+          break;
+        case MENU_TYPES.FAVORITE_ONLY:
+          recipes = family.recipes.filter(recipe => recipe.favorite);
+          break;
+        case MENU_TYPES.FAVORITE_WEIGHTED:
+          family.recipes.forEach(recipe => (recipe.favorite ? (recipes = [...recipes, recipe, recipe]) : (recipes = [...recipes, recipe])));
+          break;
+        default:
+          break;
+      }
+
+      if (family.menu.length + 1 <= recipes.length) {
+        // filter out current menu items to ensure no duplicates
+        recipes = recipes.filter(recipe => !family.menu.includes(recipe._id));
+      }
+
+      const randomNumber = Math.floor(Math.random() * recipes.length);
+      const newRecipeId = recipes[randomNumber]._id;
+      family.menu.push(newRecipeId);
+
+      await family.save();
+      return family.getMenu();
+    },
     clearMenu: async (parent, { numberOfMenuItems }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);

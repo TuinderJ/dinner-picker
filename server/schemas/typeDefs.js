@@ -178,6 +178,7 @@ const typeDefs = gql`
     makeMenu(numberOfMenuItems: Int!): [Recipe]
     makeMenuFavoritesOnly(numberOfMenuItems: Int!): [Recipe]
     makeMenuFavoriteWeighted(numberOfMenuItems: Int!): [Recipe]
+    addMenuItem: [Recipe]
     clearMenu: [Recipe]
     vetoMenuItem(recipeId: ID!): [Recipe]
     removeMenuItem(recipeId: ID!): [Recipe]

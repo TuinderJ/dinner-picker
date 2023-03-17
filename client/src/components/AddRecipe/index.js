@@ -30,7 +30,7 @@ import dinnerImage from '../../assets/dinner-image.png';
 
 export default function AddRecipe({ setActivePage }) {
   const [addRecipe, { error: addRecipeError }] = useMutation(ADD_RECIPE, { refetchQueries: [{ query: QUERY_MENU }] });
-  const [formState, setFormState] = useState({ name: '', category: '', cookTime: '', description: '', ingredients: '', instructions: '' });
+  const [formState, setFormState] = useState({ name: '', images: '', category: '', cookTime: '', description: '', ingredients: '', instructions: '' });
 
   useEffect(() => setActivePage('AddRecipe'), []);
 
@@ -45,16 +45,16 @@ export default function AddRecipe({ setActivePage }) {
   const handleFormSubmit = async e => {
     e.preventDefault();
     const form = e.target;
-    const ingredients = form.ingredients.value.split(',').map(ingredient => ingredient.trim());
-    const instructions = [{ steps: form.instructions.value.split(',').map(ingredient => ingredient.trim()) }];
+    const ingredients = form.ingredients.value.split(';').map(ingredient => ingredient.trim());
+    const instructions = [{ steps: form.instructions.value.split(';').map(ingredient => ingredient.trim()) }];
     const recipe = {
       name: form.name.value,
+      images: [form.images.value] || ['http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg'],
       category: form.category.value,
       cookTime: form.cookTime.value,
       description: form.description.value,
       ingredients,
       instructions,
-      images: ['http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg'],
     };
     const { data } = await addRecipe({ variables: { ...recipe } });
     if (data.addRecipe) window.location.assign(`/Recipe/${data.addRecipe._id}`);
@@ -74,6 +74,10 @@ export default function AddRecipe({ setActivePage }) {
                     <SLabel htmlFor='name'>Recipe Name:</SLabel>
                     <SInput type='text' name='name' value={formState.name} onChange={handleChange}></SInput>
                   </InputWrapper>
+                  <TextAreaWrapper>
+                    <SLabel htmlFor='images'>Picture Link:</SLabel>
+                    <STextArea type='url' name='images' value={formState.images} onChange={handleChange}></STextArea>
+                  </TextAreaWrapper>
                   <InputWrapper>
                     <SLabel htmlFor='category'>Category:</SLabel>
                     <SInput type='text' name='category' value={formState.category} onChange={handleChange}></SInput>
@@ -89,7 +93,7 @@ export default function AddRecipe({ setActivePage }) {
                 </InputsContainer>
                 <ImageContainer>
                   <ImageWrapper>
-                    <SImage src={dinnerImage}></SImage>
+                    <SImage src={formState.images} alt={formState.name}></SImage>
                   </ImageWrapper>
                 </ImageContainer>
               </TopDiv>

@@ -117,9 +117,11 @@ export const TopDiv = styled.div`
 `;
 
 export const InputsContainer = styled.div`
+  margin-top: 0.5rem;
   width: 50%;
   height: 100%;
   display: flex;
+  gap: 0.5rem;
   flex-direction: column;
   justify-content: space-around;
 
@@ -134,6 +136,7 @@ export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  gap: 0.5rem;
 `;
 
 export const SLabel = styled.label`
@@ -146,14 +149,13 @@ export const SLabel = styled.label`
 `;
 
 export const SInput = styled.input`
-  width: 75%;
+  width: 100%;
   height: 30px;
   background-color: transparent;
   outline: none;
   border: none;
   border-bottom: 2px solid #1b100e;
   font-size: 15px;
-  padding-left: 15px;
 
   &:focus {
     border: 2px solid #1b100e;
@@ -233,7 +235,6 @@ export const STextArea = styled.textarea`
   color: #1b100e;
   resize: none;
   font-family: 'Nunito', sans-serif;
-  padding: 12px 0px 0px 10px;
 
   &:focus {
     border: 2px solid #1b100e;

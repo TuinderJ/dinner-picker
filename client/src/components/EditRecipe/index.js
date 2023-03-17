@@ -40,10 +40,11 @@ export default function EditRecipe({ setActivePage }) {
   useEffect(() => setActivePage('AddRecipe'), []);
 
   useEffect(() => {
-    const ingredients = data?.recipe?.ingredients.join(', ') || '';
+    const ingredients = data?.recipe?.ingredients.join('; ') || '';
     const instructions = data?.recipe.instructions[0]?.steps.join(', ') || '';
     setFormState({
       name: data?.recipe?.name || '',
+      images: data?.recipe.images[0] || '',
       category: data?.recipe?.category || '',
       cookTime: data?.recipe?.cookTime || '',
       description: data?.recipe?.description || '',
@@ -63,11 +64,12 @@ export default function EditRecipe({ setActivePage }) {
   const handleFormSubmit = async e => {
     e.preventDefault();
     const form = e.target;
-    const ingredients = form.ingredients.value.split(',').map(ingredient => ingredient.trim());
-    const instructions = [{ steps: form.instructions.value.split(',').map(ingredient => ingredient.trim()) }];
+    const ingredients = form.ingredients.value.split(';').map(ingredient => ingredient.trim());
+    const instructions = [{ steps: form.instructions.value.split(';').map(ingredient => ingredient.trim()) }];
     const recipe = {
       recipeId,
       name: form.name.value,
+      images: [form.images.value] || ['http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg'],
       category: form.category.value,
       cookTime: form.cookTime.value,
       description: form.description.value,
@@ -104,6 +106,10 @@ export default function EditRecipe({ setActivePage }) {
                           <SLabel htmlFor='name'>Recipe Name:</SLabel>
                           <SInput type='text' name='name' value={formState.name} onChange={handleChange}></SInput>
                         </InputWrapper>
+                        <TextAreaWrapper>
+                          <SLabel htmlFor='images'>Picture Link:</SLabel>
+                          <STextArea type='url' name='images' value={formState.images} onChange={handleChange}></STextArea>
+                        </TextAreaWrapper>
                         <InputWrapper>
                           <SLabel htmlFor='category'>Category:</SLabel>
                           <SInput type='text' name='category' value={formState.category} onChange={handleChange}></SInput>
@@ -119,18 +125,18 @@ export default function EditRecipe({ setActivePage }) {
                       </InputsContainer>
                       <ImageContainer>
                         <ImageWrapper>
-                          <SImage src={data.recipe.images[0]} alt={data.recipe.name}></SImage>
+                          <SImage src={formState.images} alt={formState.name}></SImage>
                         </ImageWrapper>
                       </ImageContainer>
                     </TopDiv>
                     <BottomDiv>
                       <TextAreaWrapper>
                         <InputWrapper>
-                          <SLabel htmlFor='ingredients'>Ingredients: {`(Separate by commas)`}</SLabel>
+                          <SLabel htmlFor='ingredients'>Ingredients: {`(Separate by semicolons)`}</SLabel>
                           <STextArea name='ingredients' rows='3' value={formState.ingredients} onChange={handleChange}></STextArea>
                         </InputWrapper>
                         <InputWrapper>
-                          <SLabel htmlFor='instructions'>Instructions: {`(Separate by commas)`}</SLabel>
+                          <SLabel htmlFor='instructions'>Instructions: {`(Separate by semicolons)`}</SLabel>
                           <STextArea name='instructions' rows='3' value={formState.instructions} onChange={handleChange}></STextArea>
                         </InputWrapper>
                       </TextAreaWrapper>
