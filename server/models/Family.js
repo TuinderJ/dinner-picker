@@ -5,7 +5,7 @@ const recipeSchema = require('./Recipe');
 const familySchema = new Schema({
   name: String,
   members: [Schema.Types.ObjectId],
-  recipes: [recipeSchema],
+  recipes: [{ type: Schema.Types.ObjectId, ref: 'recipe' }],
   menu: [Schema.Types.ObjectId],
   menuType: String,
 });
@@ -34,6 +34,6 @@ familySchema.methods.makeMenu = async function ({ recipes, numberOfMenuItems, me
   this.save();
 };
 
-const Family = mongoose.model('Family', familySchema);
+const Family = mongoose.model('family', familySchema);
 
 module.exports = Family;

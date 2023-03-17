@@ -49,7 +49,7 @@ export default function AddRecipe({ setActivePage }) {
     const instructions = [{ steps: form.instructions.value.split(';').map(ingredient => ingredient.trim()) }];
     const recipe = {
       name: form.name.value,
-      images: [form.images.value] || ['http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg'],
+      images: form.images.value ? [form.images.value] : ['http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg'],
       category: form.category.value,
       cookTime: form.cookTime.value,
       description: form.description.value,

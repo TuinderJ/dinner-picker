@@ -44,7 +44,7 @@ export default function EditRecipe({ setActivePage }) {
     const instructions = data?.recipe.instructions[0]?.steps.join(', ') || '';
     setFormState({
       name: data?.recipe?.name || '',
-      images: data?.recipe.images[0] || '',
+      images: data?.recipe?.images[0] || '',
       category: data?.recipe?.category || '',
       cookTime: data?.recipe?.cookTime || '',
       description: data?.recipe?.description || '',
@@ -69,7 +69,7 @@ export default function EditRecipe({ setActivePage }) {
     const recipe = {
       recipeId,
       name: form.name.value,
-      images: [form.images.value] || ['http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg'],
+      images: form.images.value ? [form.images.value] : ['http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg'],
       category: form.category.value,
       cookTime: form.cookTime.value,
       description: form.description.value,

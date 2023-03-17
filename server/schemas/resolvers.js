@@ -1,6 +1,6 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { FragmentsOnCompositeTypesRule } = require('graphql');
-const { User, Family } = require('../models');
+const { User, Family, Recipe } = require('../models');
 const { signToken } = require('../utils/auth');
 const MENU_TYPES = require('../utils/menuTypes');
 
@@ -9,21 +9,16 @@ const resolvers = {
     recipes: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes').populate('recipes');
       return family?.recipes || [];
     },
     recipe: async (parent, { recipeId }, context) => {
-      if (!context.user) throw new AuthenticationError('Not logged in');
-      const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
-
-      //findRecipe
-      return family.recipes.find(recipe => recipe._id.toString() === recipeId);
+      return Recipe.findById(recipeId);
     },
     menu: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes');
       return family.getMenu();
     },
   },
@@ -69,7 +64,7 @@ const resolvers = {
     addRecipe: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes');
 
       // pushing new recipe from args to display on user
       const newRecipe = {
@@ -77,7 +72,8 @@ const resolvers = {
         createdBy: user._id,
       };
 
-      family.recipes.push(newRecipe);
+      const recipeData = await Recipe.create(newRecipe);
+      family.recipes.push(recipeData._id);
 
       await family.save();
 
@@ -87,13 +83,13 @@ const resolvers = {
     addRecipeFromUrl: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes');
     },
 
     updateRecipe: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes');
 
       //update Recipe -new name...
       const recipeIndex = family.recipes.findIndex(recipe => recipe._id.toString() === args.recipeId);
@@ -106,6 +102,7 @@ const resolvers = {
       family.recipes[recipeIndex].category = args.category;
       family.recipes[recipeIndex].cookTime = args.cookTime;
       family.recipes[recipeIndex].description = args.description;
+      family.recipes[recipeIndex].images = args.images;
       family.recipes[recipeIndex].ingredients = args.ingredients;
       family.recipes[recipeIndex].instructions = args.instructions;
 
@@ -116,7 +113,7 @@ const resolvers = {
     favoriteRecipe: async (parent, { recipeId }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes');
 
       for (let i = 0; i < family.recipes.length; i++) {
         if (family.recipes[i]._id.toString() === recipeId) {
@@ -129,7 +126,7 @@ const resolvers = {
     deleteRecipe: async (parent, { recipeId }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes');
 
       for (let i = 0; i < family.recipes.length; i++) {
         if (family.recipes[i]._id.toString() === recipeId) {
@@ -143,7 +140,7 @@ const resolvers = {
     makeMenu: async (parent, { numberOfMenuItems }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes');
 
       if (family.recipes.length === 0) throw new Error('No recipes to make a menu');
 
@@ -158,7 +155,7 @@ const resolvers = {
     makeMenuFavoritesOnly: async (parent, { numberOfMenuItems }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes');
 
       const recipes = family.recipes.filter(recipe => recipe.favorite);
       if (!recipes.length) throw new Error('No recipes are favorited');
@@ -173,7 +170,7 @@ const resolvers = {
     makeMenuFavoriteWeighted: async (parent, { numberOfMenuItems }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes');
 
       // make recipes array and double favorited items
       let recipes = [];
@@ -191,7 +188,7 @@ const resolvers = {
     addMenuItem: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes');
 
       let recipes = [];
       switch (family.menuType) {
@@ -223,7 +220,7 @@ const resolvers = {
     clearMenu: async (parent, { numberOfMenuItems }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes');
 
       family.menu = [];
       await family.save();
@@ -232,7 +229,7 @@ const resolvers = {
     vetoMenuItem: async (parent, { recipeId }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes');
 
       let recipes = [];
       switch (family.menuType) {
@@ -270,7 +267,7 @@ const resolvers = {
     removeMenuItem: async (parent, { recipeId }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId);
+      const family = await Family.findById(user.familyId).populate('recipes');
 
       for (let i = 0; i < family.menu.length; i++) {
         if (family.menu[i].toString() === recipeId) family.menu.splice(i, 1);
