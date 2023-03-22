@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 
 import { QUERY_MENU } from '../../utils/queries';
-import { MAKE_MENU, MAKE_MENU_FAVORITES_ONLY, MAKE_MENU_FAVORITES_WEIGHTED, CLEAR_MENU } from '../../utils/mutations';
+import { MAKE_MENU, MAKE_MENU_FAVORITES_ONLY, MAKE_MENU_FAVORITES_WEIGHTED, CLEAR_MENU, ADD_MENU_ITEM } from '../../utils/mutations';
 import MenuItem from '../MenuItem';
 
 import { MenuDiv, ClearMenuButton, SForm, SInput, SSelect, SOption, SBtn, MenuBody, MenuStyleSquare, SWrapper, SLabel, SFormWrapper } from './style';
@@ -14,6 +14,7 @@ export default function Menu({ setActivePage }) {
   const [makeMenuFavoritesOnly, { error: favoritesOnlyMenuError }] = useMutation(MAKE_MENU_FAVORITES_ONLY, { refetchQueries: [{ query: QUERY_MENU }] });
   const [makeMenuFavoriteWeighted, { error: favoriteWeightedMenuError }] = useMutation(MAKE_MENU_FAVORITES_WEIGHTED, { refetchQueries: [{ query: QUERY_MENU }] });
   const [clearMenu, { error: clearMenuError }] = useMutation(CLEAR_MENU, { refetchQueries: [{ query: QUERY_MENU }] });
+  const [addMenuItem, { error: addMenuItemError }] = useMutation(ADD_MENU_ITEM, { refetchQueries: [{ query: QUERY_MENU }] });
 
   const [formState, setFormState] = useState({ numberOfMenuItems: '', menuType: 'ALL_RANDOM' });
 
@@ -49,6 +50,8 @@ export default function Menu({ setActivePage }) {
 
   const handleClearMenu = async e => await clearMenu({ variables: { numberOfMenuItems: formState.numberOfMenuItems } });
 
+  const handleAddMenuItem = async e => await addMenuItem({ variables: { numberOfMenuItems: formState.numberOfMenuItems } });
+
   return (
     <>
       {loading ? (
@@ -62,6 +65,7 @@ export default function Menu({ setActivePage }) {
                   <MenuItem key={recipe._id} recipe={recipe} />
                 ))}
                 <ClearMenuButton onClick={handleClearMenu}>Clear Menu</ClearMenuButton>
+                <ClearMenuButton onClick={handleAddMenuItem}>Add Another Recipe</ClearMenuButton>
               </MenuDiv>
             </>
           ) : (
@@ -83,16 +87,6 @@ export default function Menu({ setActivePage }) {
                 </SFormWrapper>
               </MenuStyleSquare>
             </MenuBody>
-
-            // <form onSubmit={handleFormSubmit}>
-            //   <input onChange={handleChange} type='number' name='numberOfMenuItems' />
-            //   <select onChange={handleChange}>
-            //     <option value='ALL_RANDOM'>All Random</option>
-            //     <option value='FAVORITES_ONLY'>Favorites Only</option>
-            //     <option value='FAVORITE_WEIGHTED'>Favorite Weighted</option>
-            //   </select>
-            //   <button type='submit'>Make Menu</button>
-            // </form>
           )}
         </div>
       )}

@@ -174,10 +174,12 @@ const typeDefs = gql`
       yield: String
     ): Recipe
     favoriteRecipe(recipeId: ID!): Recipe
+    saveRecipe(recipeId: ID!): Recipe
     deleteRecipe(recipeId: ID!): [Recipe]
     makeMenu(numberOfMenuItems: Int!): [Recipe]
     makeMenuFavoritesOnly(numberOfMenuItems: Int!): [Recipe]
     makeMenuFavoriteWeighted(numberOfMenuItems: Int!): [Recipe]
+    addMenuItem: [Recipe]
     clearMenu: [Recipe]
     vetoMenuItem(recipeId: ID!): [Recipe]
     removeMenuItem(recipeId: ID!): [Recipe]

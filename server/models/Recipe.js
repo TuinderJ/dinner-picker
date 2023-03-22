@@ -69,4 +69,6 @@ const recipeSchema = new Schema(
   { typeKey: '$type' }
 );
 
-module.exports = recipeSchema;
+const Recipe = mongoose.model('recipe', recipeSchema);
+
+module.exports = Recipe;

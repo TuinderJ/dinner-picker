@@ -19,6 +19,23 @@ export const EditLink = styled(Link)`
   text-decoration: none;
   font-size: 1.25rem;
   padding-left: 1rem;
+  padding-right: 1rem;
+
+  @media screen and (max-width: 900px) {
+    font-size: 1rem;
+    padding-left: 0.75rem;
+  }
+`;
+
+export const Button = styled.button`
+  color: var(--paperYellow);
+  background: none;
+  border: none;
+  text-decoration: none;
+  font-size: 1.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  cursor: pointer;
 
   @media screen and (max-width: 900px) {
     font-size: 1rem;
@@ -27,6 +44,9 @@ export const EditLink = styled(Link)`
 `;
 
 export const StyledH2 = styled.h2`
+  padding-left: 1rem;
+  padding-right: 1rem;
+
   @media screen and (max-width: 900px) {
     margin-top: 1em;
     padding-left: none;
@@ -103,7 +123,7 @@ export const LeftDiv = styled.div`
   }
 `;
 
-export const ImgDiv = styled.img`
+export const Img = styled.img`
   width: 100%;
 
   @media screen and (max-width: 900px) {
@@ -114,7 +134,7 @@ export const ImgDiv = styled.img`
   }
 `;
 
-export const Ingredients = styled.div`
+export const IngredientsContainer = styled.div`
   padding-left: 1em;
   padding-top: 1em;
 

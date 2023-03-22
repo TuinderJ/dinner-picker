@@ -350,6 +350,62 @@ export const FAVORITE_RECIPE = gql`
   }
 `;
 
+export const SAVE_RECIPE = gql`
+  mutation saveRecipe($recipeId: ID!) {
+    saveRecipe(recipeId: $recipeId) {
+      _id
+      category
+      cookTime
+      created
+      createdBy
+      customerUuid
+      description
+      favorite
+      images
+      ingredients
+      instructions {
+        steps
+      }
+      lastUsed
+      name
+      newImages {
+        hUnits
+        height
+        length
+        mime
+        type
+        url
+        wUnits
+        width
+      }
+      newOriginalImages {
+        hUnits
+        height
+        length
+        mime
+        type
+        url
+        wUnits
+        width
+      }
+      originalDescription
+      originalIngredients
+      originalInstructions {
+        steps
+      }
+      originalName
+      originalTotalTime
+      originalYield
+      prepTime
+      totalTime
+      updated
+      url
+      uuid
+      yield
+    }
+  }
+`;
+
 export const DELETE_RECIPE = gql`
   mutation deleteRecipe($recipeId: ID!) {
     deleteRecipe(recipeId: $recipeId) {
@@ -390,6 +446,20 @@ export const MAKE_MENU_FAVORITES_ONLY = gql`
 export const MAKE_MENU_FAVORITES_WEIGHTED = gql`
   mutation makeMenuFavoriteWeighted($numberOfMenuItems: Int!) {
     makeMenu(numberOfMenuItems: $numberOfMenuItems) {
+      _id
+      category
+      cookTime
+      description
+      favorite
+      images
+      name
+    }
+  }
+`;
+
+export const ADD_MENU_ITEM = gql`
+  mutation addMenuItem {
+    addMenuItem {
       _id
       category
       cookTime
