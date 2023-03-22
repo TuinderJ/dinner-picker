@@ -221,9 +221,7 @@ export default function EditRecipe({ setActivePage }) {
                             {formState.ingredients.map((ingredient, index) => (
                               <Li key={ingredient.id}>
                                 <SInput data-id={ingredient.id} type='text' value={formState.ingredients[index].value} onChange={handleIngredientChange} />
-                                <RemoveListItemIcon data-id={ingredient.id} onClick={handleRemoveIngredient}>
-                                  Remove
-                                </RemoveListItemIcon>
+                                <RemoveListItemIcon className='fa fa-trash-o' aria-hidden='true' data-id={ingredient.id} onClick={handleRemoveIngredient} />
                               </Li>
                             ))}
                             <AddAnotherButton onClick={handleAddIngredient}>{formState.ingredients.length ? 'Add Another' : 'Add an Ingredient'}</AddAnotherButton>
@@ -235,9 +233,7 @@ export default function EditRecipe({ setActivePage }) {
                             {formState.instructions[0].steps.map((instruction, index) => (
                               <Li key={instruction.id}>
                                 <SInput data-id={instruction.id} type='text' value={formState.instructions[0].steps[index].value} onChange={handleInstructionChange} />
-                                <RemoveListItemIcon data-id={instruction.id} onClick={handleRemoveInstruction}>
-                                  Remove
-                                </RemoveListItemIcon>
+                                <RemoveListItemIcon className='fa fa-trash-o' aria-hidden='true' data-id={instruction.id} onClick={handleRemoveInstruction} />
                               </Li>
                             ))}
                             <AddAnotherButton onClick={handleAddInstruction}>{formState.instructions[0].steps.length ? 'Add Another' : 'Add an instruction'}</AddAnotherButton>
