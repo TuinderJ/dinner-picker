@@ -24,10 +24,15 @@ import {
   ImageWrapper,
   SImage,
   SBtnWrapper,
+  Ul,
+  Li,
+  RemoveListItemIcon,
+  AddAnotherButton,
   SButton,
   TextAreaWrapper,
   DeleteButton,
 } from './style';
+import dinnerImage from '../../assets/dinner-image.png';
 
 export default function EditRecipe({ setActivePage }) {
   const { recipeId } = useParams();
@@ -35,21 +40,36 @@ export default function EditRecipe({ setActivePage }) {
   const [updateRecipe, { error: updateRecipeError }] = useMutation(UPDATE_RECIPE, { refetchQueries: [{ query: QUERY_RECIPES }, { query: QUERY_MENU }] });
   const [deleteRecipe, { error: deleteRecipeError }] = useMutation(DELETE_RECIPE, { refetchQueries: [{ query: QUERY_RECIPES }, { query: QUERY_MENU }] });
 
-  const [formState, setFormState] = useState({ name: '', category: '', cookTime: '', description: '', ingredients: '', instructions: '' });
+  const [formState, setFormState] = useState({ name: '', category: '', cookTime: '', description: '', ingredients: [], instructions: [{ steps: [] }] });
+  const [listIds, setListIds] = useState({ ingredients: 0, instructions: 0 });
 
-  useEffect(() => setActivePage('AddRecipe'), []);
+  useEffect(() => setActivePage(''), []);
 
   useEffect(() => {
-    const ingredients = data?.recipe?.ingredients.join('; ') || '';
-    const instructions = data?.recipe.instructions[0]?.steps.join(', ') || '';
+    const ingredients = [];
+    let ingredientsId = listIds.ingredients;
+    for (let i = 0; i < data?.recipe?.ingredients.length; i++) {
+      ingredients.push({ value: data?.recipe?.ingredients[i], id: ingredientsId });
+      ingredientsId += 1;
+    }
+
+    const instructions = [{ steps: [] }];
+    let instructionsId = listIds.instructions;
+    for (let i = 0; i < data?.recipe?.instructions[0]?.steps?.length; i++) {
+      instructions[0].steps.push({ value: data?.recipe?.instructions[0].steps[i], id: instructionsId });
+      instructionsId += 1;
+    }
+
+    setListIds({ ingredients: ingredientsId, instructions: instructionsId });
+
     setFormState({
       name: data?.recipe?.name || '',
       images: data?.recipe?.images[0] || '',
       category: data?.recipe?.category || '',
       cookTime: data?.recipe?.cookTime || '',
       description: data?.recipe?.description || '',
-      ingredients: ingredients || '',
-      instructions: instructions || '',
+      ingredients,
+      instructions,
     });
   }, [data]);
 
@@ -64,25 +84,89 @@ export default function EditRecipe({ setActivePage }) {
   const handleFormSubmit = async e => {
     e.preventDefault();
     const form = e.target;
-    const ingredients = form.ingredients.value.split(';').map(ingredient => ingredient.trim());
-    const instructions = [{ steps: form.instructions.value.split(';').map(ingredient => ingredient.trim()) }];
+
+    const ingredientsList = document.getElementById('ingredients');
+    const ingredients = [];
+    for (let i = 0; i < ingredientsList.children.length - 1; i++) {
+      const li = ingredientsList.children[i];
+      if (li.children[0].value !== '') ingredients.push(li.children[0].value);
+    }
+
+    const instructionsList = document.getElementById('instructions');
+    const instructions = [{ steps: [] }];
+    for (let i = 0; i < instructionsList.children.length - 1; i++) {
+      const li = instructionsList.children[i];
+      if (li.children[0].value !== '') instructions[0].steps.push(li.children[0].value);
+    }
+
     const recipe = {
       recipeId,
       name: form.name.value,
-      images: form.images.value ? [form.images.value] : ['http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1460_1_1436891540.jpg'],
+      images: form.images.value ? [form.images.value] : [dinnerImage],
       category: form.category.value,
       cookTime: form.cookTime.value,
       description: form.description.value,
       ingredients,
       instructions,
     };
-    const { data } = await updateRecipe({ variables: { ...recipe } });
-    if (data.updateRecipe) window.location.assign(`/Recipe/${data.updateRecipe._id}`);
+    try {
+      const { data } = await updateRecipe({ variables: { ...recipe } });
+      if (data.updateRecipe) window.location.assign(`/Recipe/${data.updateRecipe._id}`);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const handleDelete = async () => {
     const { data } = await deleteRecipe({ variables: { recipeId } });
     if (data.deleteRecipe) window.location.assign(`/AllRecipes`);
+  };
+
+  const handleAddIngredient = async e => {
+    e.preventDefault();
+    const id = listIds.ingredients;
+    setListIds({ ...listIds, ingredients: id + 1 });
+
+    const ingredients = [...formState.ingredients, { value: '', id }];
+    setFormState({ ...formState, ingredients });
+  };
+
+  const handleIngredientChange = async e => {
+    const ingredients = [...formState.ingredients];
+    for (let i = 0; i < ingredients.length; i++) if (ingredients[i].id === Number(e.target.dataset.id)) ingredients[i].value = e.target.value;
+    setFormState({ ...formState, ingredients });
+  };
+
+  const handleRemoveIngredient = async e => {
+    e.preventDefault();
+    const { id } = e.target.dataset;
+    const oldIngredients = [...formState.ingredients];
+
+    const ingredients = oldIngredients.filter(step => step.id !== Number(id));
+    setFormState({ ...formState, ingredients });
+  };
+
+  const handleAddInstruction = async e => {
+    e.preventDefault();
+    const id = listIds.instructions;
+    setListIds({ ...listIds, instructions: id + 1 });
+    const instructions = [{ steps: [...formState.instructions[0].steps, { value: '', id }] }];
+    setFormState({ ...formState, instructions });
+  };
+
+  const handleInstructionChange = async e => {
+    const instructions = { ...formState.instructions };
+    for (let i = 0; i < instructions[0].steps.length; i++) if (instructions[0].steps[i].id === Number(e.target.dataset.id)) instructions[0].steps[i].value = e.target.value;
+    setFormState({ ...formState, instructions });
+  };
+
+  const handleRemoveInstruction = async e => {
+    e.preventDefault();
+    const { id } = e.target.dataset;
+    const oldInstructions = { ...formState.instructions };
+
+    const instructions = [{ steps: oldInstructions[0].steps.filter(step => step.id !== Number(id)) }];
+    setFormState({ ...formState, instructions });
   };
 
   return (
@@ -132,12 +216,32 @@ export default function EditRecipe({ setActivePage }) {
                     <BottomDiv>
                       <TextAreaWrapper>
                         <InputWrapper>
-                          <SLabel htmlFor='ingredients'>Ingredients: {`(Separate by semicolons)`}</SLabel>
-                          <STextArea name='ingredients' rows='3' value={formState.ingredients} onChange={handleChange}></STextArea>
+                          <SLabel htmlFor='ingredients'>Ingredients: {`(Separate by commas)`}</SLabel>
+                          <Ul id='ingredients'>
+                            {formState.ingredients.map((ingredient, index) => (
+                              <Li key={ingredient.id}>
+                                <SInput data-id={ingredient.id} type='text' value={formState.ingredients[index].value} onChange={handleIngredientChange} />
+                                <RemoveListItemIcon data-id={ingredient.id} onClick={handleRemoveIngredient}>
+                                  Remove
+                                </RemoveListItemIcon>
+                              </Li>
+                            ))}
+                            <AddAnotherButton onClick={handleAddIngredient}>{formState.ingredients.length ? 'Add Another' : 'Add an Ingredient'}</AddAnotherButton>
+                          </Ul>
                         </InputWrapper>
                         <InputWrapper>
-                          <SLabel htmlFor='instructions'>Instructions: {`(Separate by semicolons)`}</SLabel>
-                          <STextArea name='instructions' rows='3' value={formState.instructions} onChange={handleChange}></STextArea>
+                          <SLabel htmlFor='instructions'>Instructions: {`(Separate by commas)`}</SLabel>
+                          <Ul id='instructions'>
+                            {formState.instructions[0].steps.map((instruction, index) => (
+                              <Li key={instruction.id}>
+                                <SInput data-id={instruction.id} type='text' value={formState.instructions[0].steps[index].value} onChange={handleInstructionChange} />
+                                <RemoveListItemIcon data-id={instruction.id} onClick={handleRemoveInstruction}>
+                                  Remove
+                                </RemoveListItemIcon>
+                              </Li>
+                            ))}
+                            <AddAnotherButton onClick={handleAddInstruction}>{formState.instructions[0].steps.length ? 'Add Another' : 'Add an instruction'}</AddAnotherButton>
+                          </Ul>
                         </InputWrapper>
                       </TextAreaWrapper>
                       <SBtnWrapper>

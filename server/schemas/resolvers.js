@@ -89,39 +89,53 @@ const resolvers = {
     updateRecipe: async (parent, args, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
-      const family = await Family.findById(user.familyId).populate('recipes');
+      const recipe = await Recipe.findById(args.recipeId);
 
-      //update Recipe -new name...
-      const recipeIndex = family.recipes.findIndex(recipe => recipe._id.toString() === args.recipeId);
+      if (user._id.toString() !== recipe.createdBy.toString()) throw new Error('This recipe does not belong to you.');
 
-      if (recipeIndex === -1) {
-        throw new Error('Recipe not found');
-      }
+      recipe.name = args.name;
+      recipe.category = args.category;
+      recipe.cookTime = args.cookTime;
+      recipe.description = args.description;
+      recipe.images = args.images;
+      recipe.ingredients = args.ingredients;
+      recipe.instructions = args.instructions;
 
-      family.recipes[recipeIndex].name = args.name;
-      family.recipes[recipeIndex].category = args.category;
-      family.recipes[recipeIndex].cookTime = args.cookTime;
-      family.recipes[recipeIndex].description = args.description;
-      family.recipes[recipeIndex].images = args.images;
-      family.recipes[recipeIndex].ingredients = args.ingredients;
-      family.recipes[recipeIndex].instructions = args.instructions;
+      await recipe.save();
 
-      await family.save();
-
-      return family.recipes[recipeIndex];
+      return recipe;
     },
     favoriteRecipe: async (parent, { recipeId }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
+      const recipe = await Recipe.findById(recipeId);
+
+      recipe.favorite = !recipe.favorite;
+
+      await recipe.save();
+      return recipe;
+    },
+    saveRecipe: async (parent, { recipeId }, context) => {
+      if (!context.user) throw new AuthenticationError('Not logged in');
       const user = await User.findById(context.user._id);
       const family = await Family.findById(user.familyId).populate('recipes');
+      const recipe = await Recipe.findById(recipeId);
 
-      for (let i = 0; i < family.recipes.length; i++) {
-        if (family.recipes[i]._id.toString() === recipeId) {
-          family.recipes[i].favorite = !family.recipes[i].favorite;
-          await family.save();
-          return family.recipes[i];
-        }
-      }
+      const recipeCopy = {};
+      recipeCopy.name = recipe.name;
+      recipeCopy.category = recipe.category;
+      recipeCopy.cookTime = recipe.cookTime;
+      recipeCopy.createdBy = user._id;
+      recipeCopy.description = recipe.description;
+      recipeCopy.images = recipe.images;
+      recipeCopy.ingredients = recipe.ingredients;
+      recipeCopy.instructions = recipe.instructions;
+
+      const newRecipe = await Recipe.create(recipeCopy);
+      family.recipes.push(newRecipe._id);
+
+      newRecipe.save();
+      family.save();
+      return newRecipe;
     },
     deleteRecipe: async (parent, { recipeId }, context) => {
       if (!context.user) throw new AuthenticationError('Not logged in');
