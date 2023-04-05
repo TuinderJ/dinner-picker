@@ -7,10 +7,9 @@ export const AddBody = styled.div`
   margin-bottom: 1rem;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
 
   @media screen and (max-width: 576px) {
-    max-height: 750px;
+    margin-bottom: 0;
   }
 `;
 
@@ -169,17 +168,23 @@ export const ImageContainer = styled.div`
 
 export const ImageWrapper = styled.div`
   width: 60%;
-  overflow: hidden;
   display: flex;
   align-items: center;
 
   @media screen and (max-width: 576px) {
-    width: 60%;
+    width: 100%;
   }
 `;
 
 export const SImage = styled.img`
   max-height: 23rem;
+  width: 100%;
+  object-fit: contain;
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+    object-fit: scale-down;
+  }
 `;
 
 export const BottomDiv = styled.div`
@@ -229,12 +234,24 @@ export const Ul = styled.ul`
   padding: 0;
 `;
 
-export const Li = styled.li``;
+export const Li = styled.li`
+  padding-bottom: 0.75rem;
+
+  & input {
+    @media screen and (max-width: 576px) {
+      width: 90%;
+    }
+  }
+`;
 
 export const RemoveListItemIcon = styled.i`
   font-size: 1.25rem;
   cursor: pointer;
   margin-left: 0.5rem;
+
+  @media screen and (max-width: 576px) {
+    margin: 0;
+  }
 `;
 
 export const AddAnotherButton = styled.button`
